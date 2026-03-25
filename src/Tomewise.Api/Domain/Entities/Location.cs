@@ -10,5 +10,5 @@ public class Location
     public string? Description { get; set; }
 
     // Navigation properties
-    public ICollection<BookItemSource> BookItems { get; set;} = [];
+    public ICollection<BookItem> BookItems { get; set;} = [];
 }
