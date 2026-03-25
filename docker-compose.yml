@@ -1,0 +1,15 @@
+services:
+  tomewise-db:
+    image: postgres:16
+    container_name: tomewise-db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: localdev
+      POSTGRES_DB: tomewise
+    ports:
+      - "5433:5432"
+    volumes:
+      - tomewise-pgdata:/var/lib/postgresql/data
+
+volumes:
+  tomewise-pgdata:
