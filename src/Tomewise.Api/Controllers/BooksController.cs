@@ -47,6 +47,21 @@ public class BooksController(BookTrackerDbContext context) : ControllerBase
     public async Task<ActionResult<BookResponseDto>> CreateBook(
         [FromBody] CreateBookRequestDto request)
     {
+        if (request.Isbn13 != null)
+        {
+            var existing = await context.Books
+                .FirstOrDefaultAsync(b => b.Isbn13 == request.Isbn13);
+            if (existing != null)
+                return Ok(MapToResponse(existing));
+        }
+
+        if (request.Isbn10 != null)
+        {
+            var existing = await context.Books
+                .FirstOrDefaultAsync(b => b.Isbn10 == request.Isbn10);
+            if (existing != null)
+                return Ok(MapToResponse(existing));
+        }
         var book = new Book
         {
             Id = Guid.NewGuid(),

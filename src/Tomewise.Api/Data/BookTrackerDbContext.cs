@@ -32,8 +32,8 @@ public class BookTrackerDbContext(DbContextOptions<BookTrackerDbContext> options
             e.Property(b => b.CoverImageUrl).HasMaxLength(2048);
             e.Property(b => b.Source).HasConversion<string>();
 
-            e.HasIndex(b => b.Isbn13);
-            e.HasIndex(b => b.Isbn10);
+            e.HasIndex(b => b.Isbn13).IsUnique();
+            e.HasIndex(b => b.Isbn10).IsUnique();
         });
 
         // Author
