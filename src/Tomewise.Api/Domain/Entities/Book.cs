@@ -8,7 +8,7 @@ public class Book
     public string? Isbn10 { get; set; }
     public string? Isbn13 { get; set; }
     public string? CoverImageUrl { get; set; }
-    public string? PublishedYear { get; set; }
+    public int? PublishedYear { get; set; }
     public string? Publisher { get; set; }
     public string? Language { get; set; }
     public int? PageCount { get; set; }
