@@ -5,10 +5,12 @@ namespace Tomewise.Api.Domain.Entities;
 public class Location
 {
     public Guid Id { get; set; }
+    public string UserId { get; set; } = string.Empty;
     public string BookCase { get; set; } = string.Empty;
     public int ShelfNumber { get; set; }
     public string? Description { get; set; }
 
     // Navigation properties
-    public ICollection<BookItem> BookItems { get; set;} = [];
+    public ApplicationUser User { get; set; } = null!;
+    public ICollection<BookItem> BookItems { get; set; } = [];
 }

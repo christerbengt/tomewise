@@ -7,6 +7,7 @@ public class BookItem
     public Guid Id { get; set; }
     public Guid BookId { get; set; }
     public Guid? LocationId { get; set; }
+    public string UserId { get; set; } = string.Empty;
 
     public BookCondition Condition { get; set; }
     public BookStatus Status { get; set; }
@@ -21,6 +22,7 @@ public class BookItem
 
     // Navigation properties
     public Book Book { get; set; } = null!;
+    public ApplicationUser User { get; set; } = null!;
     public Location? Location { get; set; }
     public Listing? Listing { get; set; }
     public ICollection<LendingRecord> LendingRecords { get; set; } = [];

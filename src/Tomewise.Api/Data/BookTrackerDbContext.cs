@@ -1,11 +1,10 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Tomewise.Api.Domain.Entities;
-using Tomewise.Api.Domain.Enums;
 
 namespace Tomewise.Api.Data;
 
-public class BookTrackerDbContext(DbContextOptions<BookTrackerDbContext> options) 
+public class BookTrackerDbContext(DbContextOptions<BookTrackerDbContext> options)
     : IdentityDbContext<ApplicationUser>(options)
 {
     public DbSet<Book> Books => Set<Book>();
@@ -93,6 +92,12 @@ public class BookTrackerDbContext(DbContextOptions<BookTrackerDbContext> options
             e.Property(l => l.Id).HasDefaultValueSql("gen_random_uuid()");
             e.Property(l => l.BookCase).IsRequired().HasMaxLength(10);
             e.HasIndex(l => new { l.BookCase, l.ShelfNumber }).IsUnique();
+
+            e.HasOne(l => l.User)
+                .WithMany()
+                .HasForeignKey(l => l.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
+
         });
 
         // Tag
@@ -102,6 +107,11 @@ public class BookTrackerDbContext(DbContextOptions<BookTrackerDbContext> options
             e.Property(t => t.Id).HasDefaultValueSql("gen_random_uuid()");
             e.Property(t => t.Name).IsRequired().HasMaxLength(100);
             e.HasIndex(t => t.Name).IsUnique();
+
+            e.HasOne(t => t.User)
+                .WithMany()
+                .HasForeignKey(t => t.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
         });
 
         // BookItem
@@ -127,6 +137,12 @@ public class BookTrackerDbContext(DbContextOptions<BookTrackerDbContext> options
                 .OnDelete(DeleteBehavior.SetNull);
 
             e.HasIndex(bi => bi.Status);
+
+            e.HasOne(bi => bi.User)
+                .WithMany()
+                .HasForeignKey(bi => bi.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
+
         });
 
         // BookItemTag
@@ -182,6 +198,6 @@ public class BookTrackerDbContext(DbContextOptions<BookTrackerDbContext> options
             e.HasIndex(l => l.Status);
         });
 
-            
+
     }
 }
