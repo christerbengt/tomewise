@@ -1,5 +1,7 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Tomewise.Api.Data;
+using Tomewise.Api.Domain.Entities;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +13,17 @@ builder.Services.AddOpenApi();
 
 builder.Services.AddDbContext<BookTrackerDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("BookTracker")));
+
+builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
+{
+    options.Password.RequiredLength = 8;
+    options.Password.RequireDigit = true;
+    options.Password.RequireUppercase = true;
+    options.Password.RequireNonAlphanumeric = false;
+    options.User.RequireUniqueEmail = true;
+})
+.AddEntityFrameworkStores<BookTrackerDbContext>()
+.AddDefaultTokenProviders();
 
 var app = builder.Build();
 

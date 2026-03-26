@@ -1,11 +1,12 @@
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Tomewise.Api.Domain.Entities;
 using Tomewise.Api.Domain.Enums;
 
 namespace Tomewise.Api.Data;
 
-public class BookTrackerDbContext(DbContextOptions<BookTrackerDbContext> options)
-    : DbContext(options)
+public class BookTrackerDbContext(DbContextOptions<BookTrackerDbContext> options) 
+    : IdentityDbContext<ApplicationUser>(options)
 {
     public DbSet<Book> Books => Set<Book>();
     public DbSet<Author> Authors => Set<Author>();
@@ -18,6 +19,7 @@ public class BookTrackerDbContext(DbContextOptions<BookTrackerDbContext> options
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        base.OnModelCreating(modelBuilder);
         // Book
         modelBuilder.Entity<Book>(e =>
         {
@@ -179,5 +181,7 @@ public class BookTrackerDbContext(DbContextOptions<BookTrackerDbContext> options
 
             e.HasIndex(l => l.Status);
         });
+
+            
     }
 }
