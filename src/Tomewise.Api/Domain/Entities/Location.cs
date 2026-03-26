@@ -8,6 +8,7 @@ public class Location
     public string UserId { get; set; } = string.Empty;
     public string BookCase { get; set; } = string.Empty;
     public int ShelfNumber { get; set; }
+    public string? CustomCode { get; set; }
     public string? Description { get; set; }
 
     // Navigation properties
