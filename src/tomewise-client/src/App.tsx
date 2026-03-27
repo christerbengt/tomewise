@@ -3,6 +3,11 @@ import { useAuth } from './context/AuthContext';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import DashboardPage from './pages/DashboardPage';
+import MyBooksPage from './pages/MyBooksPage';
+import LocationsPage from './pages/LocationsPage';
+import LendingPage from './pages/LendingPage';
+import ListingsPage from './pages/ListingsPage';
+import Layout from './components/Layout';
 
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   const { isAuthenticated } = useAuth();
@@ -18,7 +23,49 @@ const App = () => {
         path="/"
         element={
           <ProtectedRoute>
-            <DashboardPage />
+            <Layout>
+              <DashboardPage />
+            </Layout>
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/my-books"
+        element={
+          <ProtectedRoute>
+            <Layout>
+              <MyBooksPage />
+            </Layout>
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/locations"
+        element={
+          <ProtectedRoute>
+            <Layout>
+              <LocationsPage />
+            </Layout>
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/lending"
+        element={
+          <ProtectedRoute>
+            <Layout>
+              <LendingPage />
+            </Layout>
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/listings"
+        element={
+          <ProtectedRoute>
+            <Layout>
+              <ListingsPage />
+            </Layout>
           </ProtectedRoute>
         }
       />
