@@ -9,6 +9,16 @@ using Tomewise.Api.Domain.Entities;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("TomewiseFrontend", policy =>
+    {
+        policy.WithOrigins("http://localhost:5173")
+            .AllowAnyHeader()
+            .AllowAnyMethod();
+    });
+});
+
 // Add services to the container.
 
 builder.Services.AddControllers();
@@ -62,6 +72,9 @@ if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
 }
+
+app.UseCors("TomewiseFrontend");
+app.UseHttpsRedirection();
 
 app.UseHttpsRedirection();
 
