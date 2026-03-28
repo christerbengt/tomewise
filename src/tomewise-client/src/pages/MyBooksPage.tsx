@@ -1,36 +1,36 @@
-import { useState } from 'react';
-import { useQuery } from '@tanstack/react-query';
-import { getBookItems } from '../api/bookItems';
-import BookFilters from '../components/BookFilters';
-import type { FilterState } from '../components/BookFilters';
+import { useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { getBookItems } from "../api/bookItems";
+import BookFilters from "../components/BookFilters";
+import type { FilterState } from "../components/BookFilters";
 
 const statusLabels: Record<number, string> = {
-  0: 'In collection',
-  1: 'Wishlist',
-  2: 'Lent',
-  3: 'For sale',
-  4: 'Sold',
+  0: "In collection",
+  1: "Wishlist",
+  2: "Lent",
+  3: "For sale",
+  4: "Sold",
 };
 
 const conditionLabels: Record<number, string> = {
-  0: 'New',
-  1: 'Like new',
-  2: 'Very good',
-  3: 'Good',
-  4: 'Fair',
-  5: 'Poor',
+  0: "New",
+  1: "Like new",
+  2: "Very good",
+  3: "Good",
+  4: "Fair",
+  5: "Poor",
 };
 
 const MyBooksPage = () => {
   const [filters, setFilters] = useState<FilterState>({
-    search: '',
-    status: '',
-    sortBy: 'title',
-    sortDirection: 'asc',
+    search: "",
+    status: "",
+    sortBy: "title",
+    sortDirection: "asc",
   });
 
   const { data: bookItems = [], isLoading } = useQuery({
-    queryKey: ['bookItems'],
+    queryKey: ["bookItems"],
     queryFn: getBookItems,
   });
 
@@ -40,30 +40,30 @@ const MyBooksPage = () => {
         const q = filters.search.toLowerCase();
         if (!item.bookTitle.toLowerCase().includes(q)) return false;
       }
-      if (filters.status !== '') {
+      if (filters.status !== "") {
         if (item.status !== Number(filters.status)) return false;
       }
       return true;
     })
     .sort((a, b) => {
-      let valA = '';
-      let valB = '';
+      let valA = "";
+      let valB = "";
 
       switch (filters.sortBy) {
-        case 'title':
+        case "title":
           valA = a.bookTitle;
           valB = b.bookTitle;
           break;
-        case 'location':
-          valA = a.locationDescription ?? '';
-          valB = b.locationDescription ?? '';
+        case "location":
+          valA = a.locationDescription ?? "";
+          valB = b.locationDescription ?? "";
           break;
-        case 'acquiredDate':
-          valA = a.acquiredDate ?? '';
-          valB = b.acquiredDate ?? '';
+        case "acquiredDate":
+          valA = a.acquiredDate ?? "";
+          valB = b.acquiredDate ?? "";
           break;
-        case 'estimatedValue':
-          return filters.sortDirection === 'asc'
+        case "estimatedValue":
+          return filters.sortDirection === "asc"
             ? (a.estimatedValue ?? 0) - (b.estimatedValue ?? 0)
             : (b.estimatedValue ?? 0) - (a.estimatedValue ?? 0);
         default:
@@ -71,7 +71,7 @@ const MyBooksPage = () => {
           valB = b.bookTitle;
       }
 
-      return filters.sortDirection === 'asc'
+      return filters.sortDirection === "asc"
         ? valA.localeCompare(valB)
         : valB.localeCompare(valA);
     });
@@ -105,10 +105,12 @@ const MyBooksPage = () => {
               <div className="book-info">
                 <h3>{item.bookTitle}</h3>
                 <div className="book-meta">
-                  {item.locationDescription && (
-                    <span className="meta-tag">{item.locationDescription}</span>
-                  )}
-                  <span className="meta-tag">{conditionLabels[item.condition]}</span>
+                  <span className="meta-tag">
+                    {item.locationDescription ?? "Unshelved"}
+                  </span>
+                  <span className="meta-tag">
+                    {conditionLabels[item.condition]}
+                  </span>
                   <span className={`meta-tag status-${item.status}`}>
                     {statusLabels[item.status]}
                   </span>
@@ -116,7 +118,9 @@ const MyBooksPage = () => {
                 {item.tags.length > 0 && (
                   <div className="book-tags">
                     {item.tags.map((tag) => (
-                      <span key={tag} className="tag">{tag}</span>
+                      <span key={tag} className="tag">
+                        {tag}
+                      </span>
                     ))}
                   </div>
                 )}

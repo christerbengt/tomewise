@@ -53,6 +53,9 @@ public class LocationsController(BookTrackerDbContext context) : ControllerBase
     {
         var userId = GetUserId();
 
+        if (request.ShelfNumber < 1)
+            return BadRequest("Shelf number must be at least 1");
+
         var existing = await context.Locations
             .FirstOrDefaultAsync(l =>
                 l.UserId == userId &&
@@ -86,6 +89,9 @@ public class LocationsController(BookTrackerDbContext context) : ControllerBase
         [FromBody] UpdateLocationRequestDto request)
     {
         var userId = GetUserId();
+
+        if (request.ShelfNumber < 1)
+            return BadRequest("Shelf number must be at least 1");
 
         var location = await context.Locations
             .FirstOrDefaultAsync(l => l.UserId == userId && l.Id == id);
