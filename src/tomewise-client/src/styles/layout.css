@@ -1,0 +1,136 @@
+.layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* Sidebar — desktop */
+.sidebar {
+  width: 220px;
+  min-height: 100vh;
+  background: white;
+  border-right: 1px solid #e5e5e5;
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem 1rem;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+}
+
+.sidebar-header h1 {
+  font-size: 1.3rem;
+  color: #4a3abd;
+  margin-bottom: 2rem;
+}
+
+.nav-links {
+  list-style: none;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.nav-links a {
+  display: block;
+  padding: 0.6rem 0.8rem;
+  border-radius: 6px;
+  color: #444;
+  font-size: 0.95rem;
+  text-decoration: none;
+  transition: background 0.15s;
+}
+
+.nav-links a:hover {
+  background: #f0eeff;
+  color: #4a3abd;
+}
+
+.nav-links a.active {
+  background: #f0eeff;
+  color: #4a3abd;
+  font-weight: 500;
+}
+
+.logout-button {
+  width: 100%;
+  padding: 0.6rem;
+  background: none;
+  border: 1px solid #e5e5e5;
+  border-radius: 6px;
+  color: #666;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: all 0.15s;
+}
+
+.logout-button:hover {
+  border-color: #4a3abd;
+  color: #4a3abd;
+}
+
+.main-content {
+  margin-left: 220px;
+  flex: 1;
+  padding: 2rem;
+}
+
+/* Bottom tab bar — mobile */
+@media (max-width: 768px) {
+  .sidebar {
+    width: 100%;
+    min-height: auto;
+    height: 60px;
+    top: auto;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    flex-direction: row;
+    align-items: center;
+    padding: 0;
+    border-right: none;
+    border-top: 1px solid #e5e5e5;
+    z-index: 100;
+  }
+
+  .sidebar-header {
+    display: none;
+  }
+
+  .nav-links {
+    flex-direction: row;
+    justify-content: space-around;
+    flex: 1;
+    gap: 0;
+  }
+
+  .nav-links a {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0.4rem 0.5rem;
+    font-size: 0.7rem;
+    border-radius: 4px;
+  }
+
+  .logout-button {
+    width: auto;
+    border: none;
+    padding: 0.4rem 0.8rem;
+    font-size: 0.7rem;
+    border-radius: 4px;
+  }
+
+  .main-content {
+    margin-left: 0;
+    margin-bottom: 60px;
+    padding: 1rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .desktop-only {
+    display: none;
+  }
+}
