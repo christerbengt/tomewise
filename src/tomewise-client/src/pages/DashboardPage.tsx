@@ -24,7 +24,7 @@ const DashboardPage = () => {
     queryFn: getActiveListings,
   });
 
-  const totalBooks = bookItems.length;
+  const totalBooks = bookItems.filter((item) => item.status !== 1 && item.status !== 4).length;
   const forSale = activeListings.length;
 
   return (

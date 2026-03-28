@@ -1,0 +1,92 @@
+.listing-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.listing-card {
+  background: white;
+  border-radius: 10px;
+  padding: 0.75rem 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+}
+
+.listing-card--closed {
+  opacity: 0.6;
+}
+
+.listing-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  flex: 1;
+  min-width: 0;
+}
+
+.listing-title {
+  font-weight: 500;
+  font-size: 0.95rem;
+}
+
+.listing-meta {
+  font-size: 0.82rem;
+  color: #666;
+}
+
+.listing-description {
+  font-size: 0.8rem;
+  color: #888;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.listing-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  align-items: flex-end;
+}
+
+.sold-input-group {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.sold-input-group input {
+  width: 110px;
+  padding: 0.4rem 0.6rem;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  outline: none;
+}
+
+.sold-input-group input:focus {
+  border-color: #4a3abd;
+}
+
+@media (max-width: 768px) {
+  .listing-card {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .listing-actions {
+    width: 100%;
+    align-items: stretch;
+  }
+
+  .sold-input-group {
+    width: 100%;
+  }
+
+  .sold-input-group input {
+    flex: 1;
+  }
+}
