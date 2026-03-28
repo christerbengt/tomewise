@@ -42,6 +42,7 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
 builder.Services.AddScoped<TokenService>();
 
 builder.Services.AddHttpClient<IsbnLookupService>();
+builder.Services.AddHttpClient<LibrisLookupService>();
 
 builder.Services.AddAuthentication(options =>
 {
