@@ -9,6 +9,7 @@ import LendingPage from "./pages/LendingPage";
 import ListingsPage from "./pages/ListingsPage";
 import Layout from "./components/Layout";
 import AddBookPage from "./pages/AddBookPage";
+import BookDetailPage from "./pages/BookDetailPage";
 
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   const { isAuthenticated } = useAuth();
@@ -76,6 +77,17 @@ const App = () => {
           <ProtectedRoute>
             <Layout>
               <AddBookPage />
+            </Layout>
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/my-books/:id"
+        element={
+          <ProtectedRoute>
+            <Layout>
+              <BookDetailPage />
             </Layout>
           </ProtectedRoute>
         }

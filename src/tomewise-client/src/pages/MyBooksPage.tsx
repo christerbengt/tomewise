@@ -101,7 +101,7 @@ const MyBooksPage = () => {
       ) : (
         <div className="book-list">
           {filtered.map((item) => (
-            <div key={item.id} className="book-card">
+            <div key={item.id} className="book-card" onClick={() => navigate(`/my-books/${item.id}`)}>
               <div className="book-cover">
                 {item.coverImageUrl ? (
                   <img src={item.coverImageUrl} alt={item.bookTitle} />
