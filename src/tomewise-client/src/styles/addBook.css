@@ -1,0 +1,129 @@
+.add-book-page {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.step-indicator {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+  font-size: 0.85rem;
+}
+
+.step {
+  color: #aaa;
+  padding: 0.3rem 0.6rem;
+  border-radius: 20px;
+}
+
+.step.active {
+  color: #4a3abd;
+  background: #f0eeff;
+  font-weight: 500;
+}
+
+.step-divider {
+  color: #ccc;
+}
+
+.add-book-card {
+  background: white;
+  border-radius: 10px;
+  padding: 1.5rem;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.add-book-card h3 {
+  font-size: 1rem;
+  font-weight: 500;
+  margin-bottom: 0.25rem;
+}
+
+.hint {
+  font-size: 0.85rem;
+  color: #888;
+  margin-top: -0.5rem;
+}
+
+.isbn-input-group {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.isbn-input-group input {
+  flex: 1;
+  padding: 0.6rem 0.8rem;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 1rem;
+  outline: none;
+}
+
+.isbn-input-group input:focus {
+  border-color: #4a3abd;
+}
+
+.button-link {
+  background: none;
+  border: none;
+  color: #4a3abd;
+  font-size: 0.85rem;
+  cursor: pointer;
+  padding: 0;
+  text-align: left;
+  text-decoration: underline;
+}
+
+.button-link:hover {
+  color: #3d2fa8;
+}
+
+.button-group {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+}
+
+.add-book-card select {
+  width: 100%;
+  padding: 0.6rem 0.8rem;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  outline: none;
+  background: white;
+  cursor: pointer;
+}
+
+.add-book-card select:focus {
+  border-color: #4a3abd;
+}
+
+.add-book-card textarea {
+  width: 100%;
+  padding: 0.6rem 0.8rem;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  outline: none;
+  resize: vertical;
+  font-family: inherit;
+}
+
+.add-book-card textarea:focus {
+  border-color: #4a3abd;
+}
+
+@media (max-width: 768px) {
+  .button-group {
+    flex-direction: column;
+  }
+
+  .isbn-input-group {
+    flex-direction: column;
+  }
+}

@@ -1,13 +1,14 @@
-import { Routes, Route, Navigate } from 'react-router-dom';
-import { useAuth } from './context/AuthContext';
-import LoginPage from './pages/LoginPage';
-import RegisterPage from './pages/RegisterPage';
-import DashboardPage from './pages/DashboardPage';
-import MyBooksPage from './pages/MyBooksPage';
-import LocationsPage from './pages/LocationsPage';
-import LendingPage from './pages/LendingPage';
-import ListingsPage from './pages/ListingsPage';
-import Layout from './components/Layout';
+import { Routes, Route, Navigate } from "react-router-dom";
+import { useAuth } from "./context/AuthContext";
+import LoginPage from "./pages/LoginPage";
+import RegisterPage from "./pages/RegisterPage";
+import DashboardPage from "./pages/DashboardPage";
+import MyBooksPage from "./pages/MyBooksPage";
+import LocationsPage from "./pages/LocationsPage";
+import LendingPage from "./pages/LendingPage";
+import ListingsPage from "./pages/ListingsPage";
+import Layout from "./components/Layout";
+import AddBookPage from "./pages/AddBookPage";
 
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   const { isAuthenticated } = useAuth();
@@ -65,6 +66,16 @@ const App = () => {
           <ProtectedRoute>
             <Layout>
               <ListingsPage />
+            </Layout>
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/add-book"
+        element={
+          <ProtectedRoute>
+            <Layout>
+              <AddBookPage />
             </Layout>
           </ProtectedRoute>
         }

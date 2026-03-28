@@ -3,6 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { getBookItems } from "../api/bookItems";
 import BookFilters from "../components/BookFilters";
 import type { FilterState } from "../components/BookFilters";
+import { useNavigate } from "react-router-dom";
 
 const statusLabels: Record<number, string> = {
   0: "In collection",
@@ -28,6 +29,7 @@ const MyBooksPage = () => {
     sortBy: "title",
     sortDirection: "asc",
   });
+  const navigate = useNavigate();
 
   const { data: bookItems = [], isLoading } = useQuery({
     queryKey: ["bookItems"],
@@ -82,7 +84,12 @@ const MyBooksPage = () => {
     <div className="my-books">
       <div className="page-header">
         <h2>My Books</h2>
-        <button className="button-primary">+ Add book</button>
+        <button
+          className="button-primary"
+          onClick={() => navigate("/add-book")}
+        >
+          + Add book
+        </button>
       </div>
 
       <BookFilters filters={filters} onChange={setFilters} />
