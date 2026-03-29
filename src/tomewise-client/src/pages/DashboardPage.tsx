@@ -5,14 +5,14 @@ import { getActiveListings } from "../api/listings";
 import { useTranslation } from "react-i18next";
 
 const DashboardPage = () => {
-  const { data: bookItems = [] } = useQuery({
-    queryKey: ["bookItems"],
+  const { data: bookItems = [], isLoading: loadingBooks } = useQuery({
+    queryKey: ['bookItems'],
     queryFn: getBookItems,
-  });
+});
 
   const { t } = useTranslation();
 
-  const { data: activeLendings = [] } = useQuery({
+  const { data: activeLendings = [], isLoading: loadingLendings } = useQuery({
     queryKey: ["activeLendings"],
     queryFn: getActiveLendings,
   });
@@ -26,6 +26,8 @@ const DashboardPage = () => {
     queryKey: ["activeListings"],
     queryFn: getActiveListings,
   });
+
+  if (loadingBooks || loadingLendings) return <div className="loading">{t('loading')}</div>;
 
   const totalBooks = bookItems.filter(
     (item) => item.status !== 1 && item.status !== 4,
