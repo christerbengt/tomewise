@@ -5,6 +5,7 @@ import { createBookItem } from '../api/bookItems';
 import { useQuery } from '@tanstack/react-query';
 import { getLocations } from '../api/locations';
 import type { IsbnLookupResult } from '../types';
+import { getLanguageName } from '../utils/languageCodes';
 
 type Step = 'isbn' | 'book' | 'copy';
 
@@ -71,7 +72,7 @@ const AddBookPage = () => {
     setAuthors(result.authors.join(', '));
     setPublisher(result.publisher ?? '');
     setPublishedYear(result.publishedYear?.toString() ?? '');
-    setLanguage(result.language ?? '');
+    setLanguage(getLanguageName(result.language) ?? '');
     setPageCount(result.pageCount?.toString() ?? '');
     setIsbn10(result.isbn10 ?? '');
     setIsbn13(result.isbn13 ?? isbn);
