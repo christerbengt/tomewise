@@ -32,7 +32,9 @@ const DashboardPage = () => {
   ).length;
   const forSale = activeListings.length;
 
-  if (!bookItems.length && !activeLendings.length) return <div className="loading">{t('loading')}</div>;
+  const isPageLoading =
+    !bookItems && !activeLendings && !overdueLendings && !activeListings;
+  if (isPageLoading) return <div className="loading">{t("loading")}</div>;
 
   return (
     <div className="dashboard">
@@ -76,7 +78,7 @@ const DashboardPage = () => {
 
       {activeLendings.length > 0 && (
         <div className="section">
-          <h3>{t('currentlyLentOut')}</h3>
+          <h3>{t("currentlyLentOut")}</h3>
           <ul className="lending-list">
             {activeLendings.map((record) => (
               <li key={record.id} className="lending-item">
