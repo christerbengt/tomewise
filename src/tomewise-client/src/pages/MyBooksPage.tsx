@@ -4,25 +4,29 @@ import { getBookItems } from "../api/bookItems";
 import BookFilters from "../components/BookFilters";
 import type { FilterState } from "../components/BookFilters";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
-const statusLabels: Record<number, string> = {
-  0: "In collection",
-  1: "Wishlist",
-  2: "Lent",
-  3: "For sale",
-  4: "Sold",
+
+
+const MyBooksPage = () => {
+  const { t } = useTranslation();
+
+  const statusLabels: Record<number, string> = {
+  0: t('inCollection'),
+  1: t('wishlist'),
+  2: t('lent'),
+  3: t('forSale'),
+  4: t('sold'),
 };
 
 const conditionLabels: Record<number, string> = {
-  0: "New",
-  1: "Like new",
-  2: "Very good",
-  3: "Good",
-  4: "Fair",
-  5: "Poor",
+  0: t('conditionNew'),
+  1: t('conditionLikeNew'),
+  2: t('conditionVeryGood'),
+  3: t('conditionGood'),
+  4: t('conditionFair'),
+  5: t('conditionPoor'),
 };
-
-const MyBooksPage = () => {
   const [filters, setFilters] = useState<FilterState>({
     search: "",
     status: "",
@@ -78,17 +82,17 @@ const MyBooksPage = () => {
         : valB.localeCompare(valA);
     });
 
-  if (isLoading) return <div className="loading">Loading your books...</div>;
+  if (isLoading) return <div className="loading">{t('loading')}</div>;
 
   return (
     <div className="my-books">
       <div className="page-header">
-        <h2>My Books</h2>
+        <h2>{t("myBooks")}</h2>
         <button
           className="button-primary"
           onClick={() => navigate("/add-book")}
         >
-          + Add book
+          {t("addBook")}
         </button>
       </div>
 
@@ -96,12 +100,16 @@ const MyBooksPage = () => {
 
       {filtered.length === 0 ? (
         <div className="empty-state">
-          <p>No books found.</p>
+          <p>{t('noBooksFound')}</p>
         </div>
       ) : (
         <div className="book-list">
           {filtered.map((item) => (
-            <div key={item.id} className="book-card" onClick={() => navigate(`/my-books/${item.id}`)}>
+            <div
+              key={item.id}
+              className="book-card"
+              onClick={() => navigate(`/my-books/${item.id}`)}
+            >
               <div className="book-cover">
                 {item.coverImageUrl ? (
                   <img src={item.coverImageUrl} alt={item.bookTitle} />
@@ -113,7 +121,7 @@ const MyBooksPage = () => {
                 <h3>{item.bookTitle}</h3>
                 <div className="book-meta">
                   <span className="meta-tag">
-                    {item.locationDescription ?? "Unshelved"}
+                    {item.locationDescription ?? t('unshelved')}
                   </span>
                   <span className="meta-tag">
                     {conditionLabels[item.condition]}

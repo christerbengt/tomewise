@@ -1,13 +1,15 @@
-import { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
-import { login } from '../api/auth';
+import { useState } from "react";
+import { useNavigate, Link } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
+import { login } from "../api/auth";
+import { useTranslation } from "react-i18next";
 
 const LoginPage = () => {
+  const { t } = useTranslation();
   const { login: authLogin } = useAuth();
   const navigate = useNavigate();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
@@ -15,13 +17,12 @@ const LoginPage = () => {
     e.preventDefault();
     setError(null);
     setLoading(true);
-
     try {
       const response = await login(email, password);
       authLogin(response.token);
-      navigate('/');
+      navigate("/");
     } catch {
-      setError('Invalid email or password');
+      setError(t("invalidCredentials"));
     } finally {
       setLoading(false);
     }
@@ -30,10 +31,10 @@ const LoginPage = () => {
   return (
     <div className="auth-container">
       <h1>Tomewise</h1>
-      <h2>Sign in</h2>
+      <h2>{t("signIn")}</h2>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
-          <label htmlFor="email">Email</label>
+          <label htmlFor="email">{t("email")}</label>
           <input
             id="email"
             type="email"
@@ -43,7 +44,7 @@ const LoginPage = () => {
           />
         </div>
         <div className="form-group">
-          <label htmlFor="password">Password</label>
+          <label htmlFor="password">{t("password")}</label>
           <input
             id="password"
             type="password"
@@ -54,10 +55,10 @@ const LoginPage = () => {
         </div>
         {error && <p className="error">{error}</p>}
         <button type="submit" disabled={loading}>
-          {loading ? 'Signing in...' : 'Sign in'}
+          {loading ? t("signingIn") : t("signIn")}
         </button>
       </form>
-      <p>Don't have an account? <Link to="/register">Register</Link></p>
+      <p>{t("noAccount")} <Link to="/register">{t("register")}</Link></p>
     </div>
   );
 };

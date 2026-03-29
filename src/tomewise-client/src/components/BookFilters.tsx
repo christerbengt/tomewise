@@ -1,10 +1,10 @@
-
+import { useTranslation } from "react-i18next";
 
 export interface FilterState {
   search: string;
   status: string;
   sortBy: string;
-  sortDirection: 'asc' | 'desc';
+  sortDirection: "asc" | "desc";
 }
 
 interface BookFiltersProps {
@@ -13,6 +13,7 @@ interface BookFiltersProps {
 }
 
 const BookFilters = ({ filters, onChange }: BookFiltersProps) => {
+  const { t } = useTranslation();
   const update = (partial: Partial<FilterState>) => {
     onChange({ ...filters, ...partial });
   };
@@ -21,7 +22,7 @@ const BookFilters = ({ filters, onChange }: BookFiltersProps) => {
     <div className="filters">
       <input
         type="text"
-        placeholder="Search by title, author..."
+        placeholder={t("searchPlaceholder")}
         value={filters.search}
         onChange={(e) => update({ search: e.target.value })}
         className="filter-search"
@@ -31,33 +32,33 @@ const BookFilters = ({ filters, onChange }: BookFiltersProps) => {
           value={filters.status}
           onChange={(e) => update({ status: e.target.value })}
         >
-          <option value="">All statuses</option>
-          <option value="0">In collection</option>
-          <option value="1">Wishlist</option>
-          <option value="2">Lent</option>
-          <option value="3">For sale</option>
-          <option value="4">Sold</option>
+          <option value="">{t("allStatuses")}</option>
+          <option value="0">{t("inCollection")}</option>
+          <option value="1">{t("wishlist")}</option>
+          <option value="2">{t("lent")}</option>
+          <option value="3">{t("forSale")}</option>
+          <option value="4">{t("sold")}</option>
         </select>
         <select
           value={filters.sortBy}
           onChange={(e) => update({ sortBy: e.target.value })}
         >
-          <option value="title">Sort by title</option>
-          <option value="author">Sort by author</option>
-          <option value="genre">Sort by genre</option>
-          <option value="location">Sort by location</option>
-          <option value="acquiredDate">Sort by date acquired</option>
-          <option value="estimatedValue">Sort by value</option>
+          <option value="title">{t("sortByTitle")}</option>
+          <option value="author">{t("sortByAuthor")}</option>
+          <option value="genre">{t("sortByGenre")}</option>
+          <option value="location">{t("sortByLocation")}</option>
+          <option value="acquiredDate">{t("sortByDateAcquired")}</option>
+          <option value="estimatedValue">{t("sortByValue")}</option>
         </select>
         <button
           onClick={() =>
             update({
-              sortDirection: filters.sortDirection === 'asc' ? 'desc' : 'asc',
+              sortDirection: filters.sortDirection === "asc" ? "desc" : "asc",
             })
           }
           className="sort-direction"
         >
-          {filters.sortDirection === 'asc' ? '↑' : '↓'}
+          {filters.sortDirection === "asc" ? "↑" : "↓"}
         </button>
       </div>
     </div>

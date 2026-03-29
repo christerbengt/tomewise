@@ -1,92 +1,88 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { lookupIsbn, createBook } from '../api/books';
-import { createBookItem } from '../api/bookItems';
-import { useQuery } from '@tanstack/react-query';
-import { getLocations } from '../api/locations';
-import type { IsbnLookupResult } from '../types';
-import { getLanguageName } from '../utils/languageCodes';
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { lookupIsbn, createBook } from "../api/books";
+import { createBookItem } from "../api/bookItems";
+import { useQuery } from "@tanstack/react-query";
+import { getLocations } from "../api/locations";
+import type { IsbnLookupResult } from "../types";
+import { getLanguageName } from "../utils/languageCodes";
+import { useTranslation } from "react-i18next";
 
-type Step = 'isbn' | 'book' | 'copy';
+type Step = "isbn" | "book" | "copy";
 
 const AddBookPage = () => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
-  const [step, setStep] = useState<Step>('isbn');
-  const [isbn, setIsbn] = useState('');
+  const [step, setStep] = useState<Step>("isbn");
+  const [isbn, setIsbn] = useState("");
   const [isbnError, setIsbnError] = useState<string | null>(null);
   const [isLooking, setIsLooking] = useState(false);
 
-  // Book fields
-  const [title, setTitle] = useState('');
-  const [authors, setAuthors] = useState('');
-  const [genres, setGenres] = useState('');
-  const [publisher, setPublisher] = useState('');
-  const [publishedYear, setPublishedYear] = useState('');
-  const [language, setLanguage] = useState('');
-  const [pageCount, setPageCount] = useState('');
-  const [isbn10, setIsbn10] = useState('');
-  const [isbn13, setIsbn13] = useState('');
+  const [title, setTitle] = useState("");
+  const [authors, setAuthors] = useState("");
+  const [genres, setGenres] = useState("");
+  const [publisher, setPublisher] = useState("");
+  const [publishedYear, setPublishedYear] = useState("");
+  const [language, setLanguage] = useState("");
+  const [pageCount, setPageCount] = useState("");
+  const [isbn10, setIsbn10] = useState("");
+  const [isbn13, setIsbn13] = useState("");
   const [savedBookId, setSavedBookId] = useState<string | null>(null);
 
-  // Copy fields
-  const [condition, setCondition] = useState('0');
-  const [status, setStatus] = useState('0');
-  const [locationId, setLocationId] = useState('');
-  const [acquiredDate, setAcquiredDate] = useState('');
-  const [acquiredPrice, setAcquiredPrice] = useState('');
-  const [notes, setNotes] = useState('');
-  const [tags, setTags] = useState('');
+  const [condition, setCondition] = useState("0");
+  const [status, setStatus] = useState("0");
+  const [locationId, setLocationId] = useState("");
+  const [acquiredDate, setAcquiredDate] = useState("");
+  const [acquiredPrice, setAcquiredPrice] = useState("");
+  const [notes, setNotes] = useState("");
+  const [tags, setTags] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [isSaving, setIsSaving] = useState(false);
 
   const { data: locations = [] } = useQuery({
-    queryKey: ['locations'],
+    queryKey: ["locations"],
     queryFn: getLocations,
   });
 
-  const handleIsbnKeyDown = async (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter') {
-      await handleIsbnLookup();
-    }
+  const handleIsbnKeyDown = async (
+    e: React.KeyboardEvent<HTMLInputElement>,
+  ) => {
+    if (e.key === "Enter") await handleIsbnLookup();
   };
 
   const handleIsbnLookup = async () => {
     if (!isbn.trim()) return;
     setIsbnError(null);
     setIsLooking(true);
-
     try {
       const result = await lookupIsbn(isbn.trim());
       populateFromLookup(result);
-      setStep('book');
+      setStep("book");
     } catch {
-      setIsbnError('No book found for this ISBN. You can fill in the details manually.');
-      setStep('book');
+      setIsbnError(
+        "No book found for this ISBN. You can fill in the details manually.",
+      );
+      setStep("book");
     } finally {
       setIsLooking(false);
     }
   };
 
   const populateFromLookup = (result: IsbnLookupResult) => {
-    setTitle(result.title ?? '');
-    setAuthors(result.authors.join(', '));
-    setPublisher(result.publisher ?? '');
-    setPublishedYear(result.publishedYear?.toString() ?? '');
-    setLanguage(getLanguageName(result.language) ?? '');
-    setPageCount(result.pageCount?.toString() ?? '');
-    setIsbn10(result.isbn10 ?? '');
+    setTitle(result.title ?? "");
+    setAuthors(result.authors.join(", "));
+    setPublisher(result.publisher ?? "");
+    setPublishedYear(result.publishedYear?.toString() ?? "");
+    setLanguage(getLanguageName(result.language) ?? "");
+    setPageCount(result.pageCount?.toString() ?? "");
+    setIsbn10(result.isbn10 ?? "");
     setIsbn13(result.isbn13 ?? isbn);
-  };
-
-  const handleSkipIsbn = () => {
-    setStep('book');
   };
 
   const handleBookSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
     setIsSaving(true);
-
     try {
       const book = await createBook({
         title,
@@ -97,14 +93,19 @@ const AddBookPage = () => {
         publisher: publisher || null,
         language: language || null,
         pageCount: pageCount ? Number(pageCount) : null,
-        authors: authors.split(',').map((a) => a.trim()).filter(Boolean),
-        genres: genres.split(',').map((g) => g.trim()).filter(Boolean),
+        authors: authors
+          .split(",")
+          .map((a) => a.trim())
+          .filter(Boolean),
+        genres: genres
+          .split(",")
+          .map((g) => g.trim())
+          .filter(Boolean),
       });
-
       setSavedBookId(book.id);
-      setStep('copy');
+      setStep("copy");
     } catch {
-      setError('Failed to save book. Please try again.');
+      setError("Failed to save book. Please try again.");
     } finally {
       setIsSaving(false);
     }
@@ -114,7 +115,6 @@ const AddBookPage = () => {
     if (!savedBookId) return;
     setError(null);
     setIsSaving(true);
-
     try {
       await createBookItem({
         bookId: savedBookId,
@@ -126,37 +126,39 @@ const AddBookPage = () => {
         estimatedValue: null,
         userCoverImagePath: null,
         notes: notes || null,
-        tags: tags.split(',').map((t) => t.trim()).filter(Boolean),
+        tags: tags
+          .split(",")
+          .map((t) => t.trim())
+          .filter(Boolean),
       });
 
       if (addAnother) {
-        // Reset everything for next book
-        setStep('isbn');
-        setIsbn('');
-        setTitle('');
-        setAuthors('');
-        setGenres('');
-        setPublisher('');
-        setPublishedYear('');
-        setLanguage('');
-        setPageCount('');
-        setIsbn10('');
-        setIsbn13('');
+        setStep("isbn");
+        setIsbn("");
+        setTitle("");
+        setAuthors("");
+        setGenres("");
+        setPublisher("");
+        setPublishedYear("");
+        setLanguage("");
+        setPageCount("");
+        setIsbn10("");
+        setIsbn13("");
         setSavedBookId(null);
-        setCondition('0');
-        setStatus('0');
-        setLocationId('');
-        setAcquiredDate('');
-        setAcquiredPrice('');
-        setNotes('');
-        setTags('');
+        setCondition("0");
+        setStatus("0");
+        setLocationId("");
+        setAcquiredDate("");
+        setAcquiredPrice("");
+        setNotes("");
+        setTags("");
         setIsbnError(null);
         setError(null);
       } else {
-        navigate('/my-books');
+        navigate("/my-books");
       }
     } catch {
-      setError('Failed to save copy. Please try again.');
+      setError("Failed to save copy. Please try again.");
     } finally {
       setIsSaving(false);
     }
@@ -165,24 +167,33 @@ const AddBookPage = () => {
   return (
     <div className="add-book-page">
       <div className="page-header">
-        <h2>Add book</h2>
-        <button className="button-secondary" onClick={() => navigate('/my-books')}>
-          Cancel
+        <h2>{t("addBookTitle")}</h2>
+        <button
+          className="button-secondary"
+          onClick={() => navigate("/my-books")}
+        >
+          {t("cancel")}
         </button>
       </div>
 
       <div className="step-indicator">
-        <span className={step === 'isbn' ? 'step active' : 'step'}>1. Find</span>
+        <span className={step === "isbn" ? "step active" : "step"}>
+          {t("stepFind")}
+        </span>
         <span className="step-divider">→</span>
-        <span className={step === 'book' ? 'step active' : 'step'}>2. Book details</span>
+        <span className={step === "book" ? "step active" : "step"}>
+          {t("stepBookDetails")}
+        </span>
         <span className="step-divider">→</span>
-        <span className={step === 'copy' ? 'step active' : 'step'}>3. Copy details</span>
+        <span className={step === "copy" ? "step active" : "step"}>
+          {t("stepCopyDetails")}
+        </span>
       </div>
 
-      {step === 'isbn' && (
+      {step === "isbn" && (
         <div className="add-book-card">
-          <h3>Scan or enter ISBN</h3>
-          <p className="hint">Scan a barcode or type the ISBN and press Enter</p>
+          <h3>{t("scanOrEnterIsbn")}</h3>
+          <p className="hint">{t("isbnHint")}</p>
           <div className="isbn-input-group">
             <input
               type="text"
@@ -197,24 +208,23 @@ const AddBookPage = () => {
               onClick={handleIsbnLookup}
               disabled={isLooking || !isbn.trim()}
             >
-              {isLooking ? 'Looking up...' : 'Look up'}
+              {isLooking ? t("lookingUp") : t("lookUp")}
             </button>
           </div>
           {isbnError && <p className="error">{isbnError}</p>}
-          <button className="button-link" onClick={handleSkipIsbn}>
-            No ISBN — enter details manually
+          <button className="button-link" onClick={() => setStep("book")}>
+            {t("noIsbn")}
           </button>
         </div>
       )}
 
-      {step === 'book' && (
+      {step === "book" && (
         <form onSubmit={handleBookSubmit} className="add-book-card">
-          <h3>Book details</h3>
+          <h3>{t("bookDetails")}</h3>
           {isbnError && <p className="hint">{isbnError}</p>}
           {error && <p className="error">{error}</p>}
-
           <div className="form-group">
-            <label htmlFor="title">Title *</label>
+            <label htmlFor="title">{t("title")} *</label>
             <input
               id="title"
               type="text"
@@ -224,28 +234,28 @@ const AddBookPage = () => {
             />
           </div>
           <div className="form-group">
-            <label htmlFor="authors">Author(s)</label>
+            <label htmlFor="authors">{t("authors")}</label>
             <input
               id="authors"
               type="text"
               value={authors}
               onChange={(e) => setAuthors(e.target.value)}
-              placeholder="Separate multiple authors with commas"
+              placeholder={t("authorsPlaceholder")}
             />
           </div>
           <div className="form-group">
-            <label htmlFor="genres">Genre(s)</label>
+            <label htmlFor="genres">{t("genres")}</label>
             <input
               id="genres"
               type="text"
               value={genres}
               onChange={(e) => setGenres(e.target.value)}
-              placeholder="Separate multiple genres with commas"
+              placeholder={t("genresPlaceholder")}
             />
           </div>
           <div className="form-row">
             <div className="form-group">
-              <label htmlFor="publisher">Publisher</label>
+              <label htmlFor="publisher">{t("publisher")}</label>
               <input
                 id="publisher"
                 type="text"
@@ -254,7 +264,7 @@ const AddBookPage = () => {
               />
             </div>
             <div className="form-group">
-              <label htmlFor="publishedYear">Year</label>
+              <label htmlFor="publishedYear">{t("year")}</label>
               <input
                 id="publishedYear"
                 type="number"
@@ -265,7 +275,7 @@ const AddBookPage = () => {
           </div>
           <div className="form-row">
             <div className="form-group">
-              <label htmlFor="language">Language</label>
+              <label htmlFor="language">{t("language")}</label>
               <input
                 id="language"
                 type="text"
@@ -274,7 +284,7 @@ const AddBookPage = () => {
               />
             </div>
             <div className="form-group">
-              <label htmlFor="pageCount">Pages</label>
+              <label htmlFor="pageCount">{t("pages")}</label>
               <input
                 id="pageCount"
                 type="number"
@@ -304,62 +314,61 @@ const AddBookPage = () => {
             </div>
           </div>
           <button type="submit" className="button-primary" disabled={isSaving}>
-            {isSaving ? 'Saving...' : 'Continue to copy details →'}
+            {isSaving ? t("saving") : t("continueToDetails")}
           </button>
         </form>
       )}
 
-      {step === 'copy' && (
+      {step === "copy" && (
         <div className="add-book-card">
-          <h3>Copy details</h3>
-          <p className="hint">Tell us about this specific physical copy</p>
+          <h3>{t("copyDetails")}</h3>
+          <p className="hint">{t("copyDetailsHint")}</p>
           {error && <p className="error">{error}</p>}
-
           <div className="form-group">
-            <label htmlFor="condition">Condition</label>
+            <label htmlFor="condition">{t("condition")}</label>
             <select
               id="condition"
               value={condition}
               onChange={(e) => setCondition(e.target.value)}
             >
-              <option value="0">New</option>
-              <option value="1">Like new</option>
-              <option value="2">Very good</option>
-              <option value="3">Good</option>
-              <option value="4">Fair</option>
-              <option value="5">Poor</option>
+              <option value="0">{t("conditionNew")}</option>
+              <option value="1">{t("conditionLikeNew")}</option>
+              <option value="2">{t("conditionVeryGood")}</option>
+              <option value="3">{t("conditionGood")}</option>
+              <option value="4">{t("conditionFair")}</option>
+              <option value="5">{t("conditionPoor")}</option>
             </select>
           </div>
           <div className="form-group">
-            <label htmlFor="status">Status</label>
+            <label htmlFor="status">{t("status")}</label>
             <select
               id="status"
               value={status}
               onChange={(e) => setStatus(e.target.value)}
             >
-              <option value="0">In collection</option>
-              <option value="1">Wishlist</option>
+              <option value="0">{t("inCollection")}</option>
+              <option value="1">{t("wishlist")}</option>
             </select>
           </div>
           <div className="form-group">
-            <label htmlFor="location">Location</label>
+            <label htmlFor="location">{t("location")}</label>
             <select
               id="location"
               value={locationId}
               onChange={(e) => setLocationId(e.target.value)}
             >
-              <option value="">Unshelved</option>
+              <option value="">{t("unshelved")}</option>
               {locations.map((loc) => (
                 <option key={loc.id} value={loc.id}>
                   {loc.customCode ?? `${loc.bookCase}${loc.shelfNumber}`}
-                  {loc.description ? ` — ${loc.description}` : ''}
+                  {loc.description ? ` — ${loc.description}` : ""}
                 </option>
               ))}
             </select>
           </div>
           <div className="form-row">
             <div className="form-group">
-              <label htmlFor="acquiredDate">Date acquired</label>
+              <label htmlFor="acquiredDate">{t("dateAcquired")}</label>
               <input
                 id="acquiredDate"
                 type="date"
@@ -368,7 +377,7 @@ const AddBookPage = () => {
               />
             </div>
             <div className="form-group">
-              <label htmlFor="acquiredPrice">Price paid</label>
+              <label htmlFor="acquiredPrice">{t("pricePaid")}</label>
               <input
                 id="acquiredPrice"
                 type="number"
@@ -379,22 +388,21 @@ const AddBookPage = () => {
             </div>
           </div>
           <div className="form-group">
-            <label htmlFor="tags">Tags</label>
+            <label htmlFor="tags">{t("tags")}</label>
             <input
               id="tags"
               type="text"
               value={tags}
               onChange={(e) => setTags(e.target.value)}
-              placeholder="Separate tags with commas"
+              placeholder={t("tagsPlaceholder")}
             />
           </div>
           <div className="form-group">
-            <label htmlFor="notes">Notes</label>
+            <label htmlFor="notes">{t("notes")}</label>
             <textarea
               id="notes"
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
-              placeholder="Signed copy, gift from..., etc."
               rows={3}
             />
           </div>
@@ -404,14 +412,14 @@ const AddBookPage = () => {
               onClick={() => handleCopySubmit(false)}
               disabled={isSaving}
             >
-              {isSaving ? 'Saving...' : 'Save'}
+              {isSaving ? t("saving") : t("save")}
             </button>
             <button
               className="button-secondary"
               onClick={() => handleCopySubmit(true)}
               disabled={isSaving}
             >
-              Save and add another
+              {t("saveAndAddAnother")}
             </button>
           </div>
         </div>

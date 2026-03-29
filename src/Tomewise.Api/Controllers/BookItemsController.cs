@@ -161,7 +161,7 @@ public class BookItemsController(BookTrackerDbContext context) : ControllerBase
         item.AcquiredDate,
         item.AcquiredPrice,
         item.EstimatedValue,
-        item.Location != null ? $"Bookcase {item.Location.BookCase}, Shelf {item.Location.ShelfNumber}" : null,
+        item.Location != null ? $"{item.Location.BookCase}{item.Location.ShelfNumber}" : null,
         item.Notes,
         item.BookItemTags.Select(bt => bt.Tag.Name)
     );

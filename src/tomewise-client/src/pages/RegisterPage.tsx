@@ -1,15 +1,17 @@
-import { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
-import { register } from '../api/auth';
+import { useState } from "react";
+import { useNavigate, Link } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
+import { register } from "../api/auth";
+import { useTranslation } from "react-i18next";
 
 const RegisterPage = () => {
+  const { t } = useTranslation();
   const { login: authLogin } = useAuth();
   const navigate = useNavigate();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
@@ -17,13 +19,12 @@ const RegisterPage = () => {
     e.preventDefault();
     setError(null);
     setLoading(true);
-
     try {
       const response = await register(email, password, firstName, lastName);
       authLogin(response.token);
-      navigate('/');
+      navigate("/");
     } catch {
-      setError('Registration failed. Please try again.');
+      setError(t("registrationFailed"));
     } finally {
       setLoading(false);
     }
@@ -32,10 +33,10 @@ const RegisterPage = () => {
   return (
     <div className="auth-container">
       <h1>Tomewise</h1>
-      <h2>Create account</h2>
+      <h2>{t("register")}</h2>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
-          <label htmlFor="firstName">First name</label>
+          <label htmlFor="firstName">{t("firstName")}</label>
           <input
             id="firstName"
             type="text"
@@ -44,7 +45,7 @@ const RegisterPage = () => {
           />
         </div>
         <div className="form-group">
-          <label htmlFor="lastName">Last name</label>
+          <label htmlFor="lastName">{t("lastName")}</label>
           <input
             id="lastName"
             type="text"
@@ -53,7 +54,7 @@ const RegisterPage = () => {
           />
         </div>
         <div className="form-group">
-          <label htmlFor="email">Email</label>
+          <label htmlFor="email">{t("email")}</label>
           <input
             id="email"
             type="email"
@@ -63,7 +64,7 @@ const RegisterPage = () => {
           />
         </div>
         <div className="form-group">
-          <label htmlFor="password">Password</label>
+          <label htmlFor="password">{t("password")}</label>
           <input
             id="password"
             type="password"
@@ -74,10 +75,10 @@ const RegisterPage = () => {
         </div>
         {error && <p className="error">{error}</p>}
         <button type="submit" disabled={loading}>
-          {loading ? 'Creating account...' : 'Create account'}
+          {loading ? t("registering") : t("register")}
         </button>
       </form>
-      <p>Already have an account? <Link to="/login">Sign in</Link></p>
+      <p>{t("haveAccount")} <Link to="/login">{t("signIn")}</Link></p>
     </div>
   );
 };

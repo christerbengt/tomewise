@@ -1,63 +1,73 @@
-import { useQuery } from '@tanstack/react-query';
-import { getBookItems } from '../api/bookItems';
-import { getActiveLendings, getOverdueLendings } from '../api/lending';
-import { getActiveListings } from '../api/listings';
+import { useQuery } from "@tanstack/react-query";
+import { getBookItems } from "../api/bookItems";
+import { getActiveLendings, getOverdueLendings } from "../api/lending";
+import { getActiveListings } from "../api/listings";
+import { useTranslation } from "react-i18next";
 
 const DashboardPage = () => {
   const { data: bookItems = [] } = useQuery({
-    queryKey: ['bookItems'],
+    queryKey: ["bookItems"],
     queryFn: getBookItems,
   });
 
+  const { t } = useTranslation();
+
   const { data: activeLendings = [] } = useQuery({
-    queryKey: ['activeLendings'],
+    queryKey: ["activeLendings"],
     queryFn: getActiveLendings,
   });
 
   const { data: overdueLendings = [] } = useQuery({
-    queryKey: ['overdueLendings'],
+    queryKey: ["overdueLendings"],
     queryFn: getOverdueLendings,
   });
 
   const { data: activeListings = [] } = useQuery({
-    queryKey: ['activeListings'],
+    queryKey: ["activeListings"],
     queryFn: getActiveListings,
   });
 
-  const totalBooks = bookItems.filter((item) => item.status !== 1 && item.status !== 4).length;
+  const totalBooks = bookItems.filter(
+    (item) => item.status !== 1 && item.status !== 4,
+  ).length;
   const forSale = activeListings.length;
+
+  if (!bookItems.length && !activeLendings.length) return <div className="loading">{t('loading')}</div>;
 
   return (
     <div className="dashboard">
-      <h2>Dashboard</h2>
+      <h2>{t("dashboard")}</h2>
 
       <div className="stats-grid">
         <div className="stat-card">
           <span className="stat-number">{totalBooks}</span>
-          <span className="stat-label">Books in collection</span>
+          <span className="stat-label">{t("booksInCollection")}</span>
         </div>
         <div className="stat-card">
           <span className="stat-number">{activeLendings.length}</span>
-          <span className="stat-label">Currently lent out</span>
+          <span className="stat-label">{t("currentlyLentOut")}</span>
         </div>
-        <div className={`stat-card ${overdueLendings.length > 0 ? 'stat-card--warning' : ''}`}>
+        <div
+          className={`stat-card ${overdueLendings.length > 0 ? "stat-card--warning" : ""}`}
+        >
           <span className="stat-number">{overdueLendings.length}</span>
-          <span className="stat-label">Overdue</span>
+          <span className="stat-label">{t("overdue")}</span>
         </div>
         <div className="stat-card">
           <span className="stat-number">{forSale}</span>
-          <span className="stat-label">Listed for sale</span>
+          <span className="stat-label">{t("listedForSale")}</span>
         </div>
       </div>
 
       {overdueLendings.length > 0 && (
         <div className="alert alert--warning">
-          <strong>Overdue books</strong>
+          <strong>{t("overdueBooks")}</strong>
           <ul>
             {overdueLendings.map((record) => (
               <li key={record.id}>
-                {record.bookTitle} — borrowed by {record.borrowerName}
-                {record.expectedReturnDate && ` (due ${record.expectedReturnDate})`}
+                {record.bookTitle} — {record.borrowerName}
+                {record.expectedReturnDate &&
+                  ` (${t("due")} ${record.expectedReturnDate})`}
               </li>
             ))}
           </ul>
@@ -66,14 +76,18 @@ const DashboardPage = () => {
 
       {activeLendings.length > 0 && (
         <div className="section">
-          <h3>Currently lent out</h3>
+          <h3>{t('currentlyLentOut')}</h3>
           <ul className="lending-list">
             {activeLendings.map((record) => (
               <li key={record.id} className="lending-item">
                 <span className="lending-title">{record.bookTitle}</span>
-                <span className="lending-borrower">→ {record.borrowerName}</span>
+                <span className="lending-borrower">
+                  → {record.borrowerName}
+                </span>
                 {record.expectedReturnDate && (
-                  <span className="lending-date">Due {record.expectedReturnDate}</span>
+                  <span className="lending-date">
+                    Due {record.expectedReturnDate}
+                  </span>
                 )}
               </li>
             ))}
