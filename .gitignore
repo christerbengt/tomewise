@@ -422,3 +422,10 @@ FodyWeavers.xsd
 .env.local
 .env.*.local
 
+# Frontend environment files
+src/tomewise-client/.env.development
+src/tomewise-client/.env.production
+
+#ASP.NET Core Sensitive settings
+**/appsettings.Development.json
+**/appsettings.Production.json
