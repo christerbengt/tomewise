@@ -1,0 +1,16 @@
+{
+  "name": "Tomewise",
+  "short_name": "Tomewise",
+  "description": "Your personal book collection manager",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f5f5f2",
+  "theme_color": "#4a3abd",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}
