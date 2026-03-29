@@ -23,14 +23,20 @@ builder.Services.AddCors(options =>
     });
 });
 
-// Add services to the container.
-
 builder.Services.AddControllers();
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
+var connectionString = builder.Configuration.GetConnectionString("BookTracker");
+
+if (connectionString != null && connectionString.StartsWith("postgresql://"))
+{
+    var uri = new Uri(connectionString);
+    var userInfo = uri.UserInfo.Split(':');
+    connectionString = $"Host={uri.Host};Port={uri.Port};Database={uri.AbsolutePath.TrimStart('/')};Username={userInfo[0]};Password={userInfo[1]}";
+}
+
 builder.Services.AddDbContext<BookTrackerDbContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString("BookTracker")));
+    options.UseNpgsql(connectionString));
 
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
 {
@@ -44,7 +50,6 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
 .AddDefaultTokenProviders();
 
 builder.Services.AddScoped<TokenService>();
-
 builder.Services.AddHttpClient<IsbnLookupService>();
 builder.Services.AddHttpClient<LibrisLookupService>();
 
@@ -68,11 +73,8 @@ builder.Services.AddAuthentication(options =>
     };
 });
 
-
-
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
@@ -80,13 +82,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseCors("TomewiseFrontend");
 app.UseHttpsRedirection();
-
-app.UseHttpsRedirection();
-
 app.UseAuthentication();
-
 app.UseAuthorization();
-
 app.MapControllers();
-
 app.Run();
