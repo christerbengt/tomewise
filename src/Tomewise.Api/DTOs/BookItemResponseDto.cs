@@ -15,5 +15,7 @@ public record BookItemResponseDto(
     decimal? EstimatedValue,
     string? LocationDescription,
     string? Notes,
-    IEnumerable<string> Tags
+    IEnumerable<string> Tags,
+    IEnumerable<string> Authors,
+    IEnumerable<string> Genres
 );

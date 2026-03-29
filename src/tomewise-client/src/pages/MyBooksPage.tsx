@@ -6,27 +6,25 @@ import type { FilterState } from "../components/BookFilters";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
-
-
 const MyBooksPage = () => {
   const { t } = useTranslation();
 
   const statusLabels: Record<number, string> = {
-  0: t('inCollection'),
-  1: t('wishlist'),
-  2: t('lent'),
-  3: t('forSale'),
-  4: t('sold'),
-};
+    0: t("inCollection"),
+    1: t("wishlist"),
+    2: t("lent"),
+    3: t("forSale"),
+    4: t("sold"),
+  };
 
-const conditionLabels: Record<number, string> = {
-  0: t('conditionNew'),
-  1: t('conditionLikeNew'),
-  2: t('conditionVeryGood'),
-  3: t('conditionGood'),
-  4: t('conditionFair'),
-  5: t('conditionPoor'),
-};
+  const conditionLabels: Record<number, string> = {
+    0: t("conditionNew"),
+    1: t("conditionLikeNew"),
+    2: t("conditionVeryGood"),
+    3: t("conditionGood"),
+    4: t("conditionFair"),
+    5: t("conditionPoor"),
+  };
   const [filters, setFilters] = useState<FilterState>({
     search: "",
     status: "",
@@ -44,7 +42,11 @@ const conditionLabels: Record<number, string> = {
     .filter((item) => {
       if (filters.search) {
         const q = filters.search.toLowerCase();
-        if (!item.bookTitle.toLowerCase().includes(q)) return false;
+        if (
+          !item.bookTitle.toLowerCase().includes(q) &&
+          !item.authors.some((a) => a.toLowerCase().includes(q))
+        )
+          return false;
       }
       if (filters.status !== "") {
         if (item.status !== Number(filters.status)) return false;
@@ -72,6 +74,14 @@ const conditionLabels: Record<number, string> = {
           return filters.sortDirection === "asc"
             ? (a.estimatedValue ?? 0) - (b.estimatedValue ?? 0)
             : (b.estimatedValue ?? 0) - (a.estimatedValue ?? 0);
+        case "author":
+          valA = a.authors[0] ?? "";
+          valB = b.authors[0] ?? "";
+          break;
+        case "genre":
+          valA = a.genres[0] ?? "";
+          valB = b.genres[0] ?? "";
+          break;
         default:
           valA = a.bookTitle;
           valB = b.bookTitle;
@@ -82,7 +92,7 @@ const conditionLabels: Record<number, string> = {
         : valB.localeCompare(valA);
     });
 
-  if (isLoading) return <div className="loading">{t('loading')}</div>;
+  if (isLoading) return <div className="loading">{t("loading")}</div>;
 
   return (
     <div className="my-books">
@@ -100,7 +110,7 @@ const conditionLabels: Record<number, string> = {
 
       {filtered.length === 0 ? (
         <div className="empty-state">
-          <p>{t('noBooksFound')}</p>
+          <p>{t("noBooksFound")}</p>
         </div>
       ) : (
         <div className="book-list">
@@ -121,7 +131,7 @@ const conditionLabels: Record<number, string> = {
                 <h3>{item.bookTitle}</h3>
                 <div className="book-meta">
                   <span className="meta-tag">
-                    {item.locationDescription ?? t('unshelved')}
+                    {item.locationDescription ?? t("unshelved")}
                   </span>
                   <span className="meta-tag">
                     {conditionLabels[item.condition]}

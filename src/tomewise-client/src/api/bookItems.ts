@@ -12,7 +12,7 @@ export const getBookItem = async (id: string): Promise<BookItem> => {
 };
 
 export const createBookItem = async (
-  bookItem: Omit<BookItem, 'id' | 'bookTitle' | 'coverImageUrl' | 'locationDescription' | 'source'>
+  bookItem: Omit<BookItem, 'id' | 'bookTitle' | 'coverImageUrl' | 'locationDescription' | 'source' | 'authors' | 'genres'>
 ): Promise<BookItem> => {
   const { data } = await apiClient.post<BookItem>('/bookitems', bookItem);
   return data;
@@ -20,7 +20,7 @@ export const createBookItem = async (
 
 export const updateBookItem = async (
   id: string,
-  bookItem: Omit<BookItem, 'id' | 'bookId' | 'bookTitle' | 'coverImageUrl' | 'locationDescription' | 'source'>
+  bookItem: Omit<BookItem, 'id' | 'bookId' | 'bookTitle' | 'coverImageUrl' | 'locationDescription' | 'source' | 'authors' | 'genres'>
 ): Promise<void> => {
   await apiClient.put(`/bookitems/${id}`, bookItem);
 };

@@ -14,4 +14,6 @@ export interface BookItem {
   userCoverImagePath: string | null;
   notes: string | null;
   tags: string[];
+  authors: string[];
+  genres: string[];
 }

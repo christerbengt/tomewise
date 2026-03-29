@@ -25,6 +25,11 @@ public class BookItemsController(BookTrackerDbContext context) : ControllerBase
         var items = await context.BookItems
             .Where(bi => bi.UserId == userId)
             .Include(bi => bi.Book)
+                .ThenInclude(b => b.BookAuthors)
+                    .ThenInclude(ba => ba.Author)
+            .Include(bi => bi.Book)
+                .ThenInclude(b => b.BookGenres)
+                    .ThenInclude(bg => bg.Genre)
             .Include(bi => bi.Location)
             .Include(bi => bi.BookItemTags)
                 .ThenInclude(bt => bt.Tag)
@@ -41,6 +46,11 @@ public class BookItemsController(BookTrackerDbContext context) : ControllerBase
         var item = await context.BookItems
             .Where(bi => bi.UserId == userId && bi.Id == id)
             .Include(bi => bi.Book)
+                .ThenInclude(b => b.BookAuthors)
+                    .ThenInclude(ba => ba.Author)
+            .Include(bi => bi.Book)
+                .ThenInclude(b => b.BookGenres)
+                    .ThenInclude(bg => bg.Genre)
             .Include(bi => bi.Location)
             .Include(bi => bi.BookItemTags)
                 .ThenInclude(bt => bt.Tag)
@@ -151,18 +161,20 @@ public class BookItemsController(BookTrackerDbContext context) : ControllerBase
     }
 
     private static BookItemResponseDto MapToResponse(BookItem item) => new(
-        item.Id,
-        item.BookId,
-        item.Book.Title,
-        item.Book.CoverImageUrl,
-        item.Condition,
-        item.Status,
-        item.Source,
-        item.AcquiredDate,
-        item.AcquiredPrice,
-        item.EstimatedValue,
-        item.Location != null ? $"{item.Location.BookCase}{item.Location.ShelfNumber}" : null,
-        item.Notes,
-        item.BookItemTags.Select(bt => bt.Tag.Name)
-    );
+    item.Id,
+    item.BookId,
+    item.Book.Title,
+    item.Book.CoverImageUrl,
+    item.Condition,
+    item.Status,
+    item.Source,
+    item.AcquiredDate,
+    item.AcquiredPrice,
+    item.EstimatedValue,
+    item.Location != null ? $"{item.Location.BookCase}{item.Location.ShelfNumber}" : null,
+    item.Notes,
+    item.BookItemTags.Select(bt => bt.Tag.Name),
+    item.Book.BookAuthors.Select(ba => ba.Author.Name),
+    item.Book.BookGenres.Select(bg => bg.Genre.Name)
+);
 }
