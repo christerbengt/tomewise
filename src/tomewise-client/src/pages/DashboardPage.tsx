@@ -32,10 +32,6 @@ const DashboardPage = () => {
   ).length;
   const forSale = activeListings.length;
 
-  const isPageLoading =
-    !bookItems && !activeLendings && !overdueLendings && !activeListings;
-  if (isPageLoading) return <div className="loading">{t("loading")}</div>;
-
   return (
     <div className="dashboard">
       <h2>{t("dashboard")}</h2>
