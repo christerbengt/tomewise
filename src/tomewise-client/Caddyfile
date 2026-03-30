@@ -1,5 +1,10 @@
 :{$PORT} {
     root * /app/dist
+    encode gzip
     file_server
-    try_files {path} /index.html
+    @notStatic {
+        not path /assets/*
+        not file
+    }
+    rewrite @notStatic /index.html
 }
