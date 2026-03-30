@@ -22,7 +22,7 @@ const RegisterPage = () => {
     try {
       const response = await register(email, password, firstName, lastName);
       authLogin(response.token);
-      navigate("/");
+      navigate("/dashboard");
     } catch {
       setError(t("registrationFailed"));
     } finally {

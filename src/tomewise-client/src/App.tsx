@@ -10,6 +10,7 @@ import ListingsPage from "./pages/ListingsPage";
 import Layout from "./components/Layout";
 import AddBookPage from "./pages/AddBookPage";
 import BookDetailPage from "./pages/BookDetailPage";
+import LandingPage from "./pages/LandingPage";
 
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   const { isAuthenticated } = useAuth();
@@ -19,10 +20,11 @@ const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
 const App = () => {
   return (
     <Routes>
+      <Route path="/" element={<LandingPage />} />
       <Route path="/login" element={<LoginPage />} />
       <Route path="/register" element={<RegisterPage />} />
       <Route
-        path="/"
+        path="/dashboard"
         element={
           <ProtectedRoute>
             <Layout>
@@ -37,6 +39,26 @@ const App = () => {
           <ProtectedRoute>
             <Layout>
               <MyBooksPage />
+            </Layout>
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/my-books/:id"
+        element={
+          <ProtectedRoute>
+            <Layout>
+              <BookDetailPage />
+            </Layout>
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/add-book"
+        element={
+          <ProtectedRoute>
+            <Layout>
+              <AddBookPage />
             </Layout>
           </ProtectedRoute>
         }
@@ -71,30 +93,8 @@ const App = () => {
           </ProtectedRoute>
         }
       />
-      <Route
-        path="/add-book"
-        element={
-          <ProtectedRoute>
-            <Layout>
-              <AddBookPage />
-            </Layout>
-          </ProtectedRoute>
-        }
-      />
 
-      <Route
-        path="/my-books/:id"
-        element={
-          <ProtectedRoute>
-            <Layout>
-              <BookDetailPage />
-            </Layout>
-          </ProtectedRoute>
-        }
-      />
-
-      <Route path="*" element={<Navigate to="/login" />} />
-      
+      <Route path="*" element={<Navigate to="/" />} />
     </Routes>
   );
 };

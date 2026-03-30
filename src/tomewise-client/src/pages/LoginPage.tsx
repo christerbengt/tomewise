@@ -20,7 +20,7 @@ const LoginPage = () => {
     try {
       const response = await login(email, password);
       authLogin(response.token);
-      navigate("/");
+      navigate("/dashboard");
     } catch {
       setError(t("invalidCredentials"));
     } finally {

@@ -11,7 +11,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
   };
 
   const navLinks = [
-    { path: "/", label: t("dashboard"), mobileOnly: true },
+    { path: "/dashboard", label: t("dashboard"), mobileOnly: true },
     { path: "/my-books", label: t("myBooks"), mobileOnly: true },
     { path: "/locations", label: t("locations"), mobileOnly: true },
     { path: "/lending", label: t("lending"), mobileOnly: true },
