@@ -98,8 +98,7 @@ const AddBookPage = () => {
     setIsbn13(result.isbn13 ?? isbn);
   };
 
-  const handleBookSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleBookSubmit = async () => {
     setError(null);
     setIsSaving(true);
     try {
@@ -255,7 +254,7 @@ const AddBookPage = () => {
       )}
 
       {step === "book" && (
-        <form onSubmit={handleBookSubmit} className="add-book-card">
+        <div className="add-book-card">
           <h3>{t("bookDetails")}</h3>
           {isbnError && <p className="hint">{isbnError}</p>}
           {error && <p className="error">{error}</p>}
@@ -349,10 +348,15 @@ const AddBookPage = () => {
               />
             </div>
           </div>
-          <button type="submit" className="button-primary" disabled={isSaving}>
+          <button
+            type="button"
+            className="button-primary"
+            disabled={isSaving}
+            onClick={handleBookSubmit}
+          >
             {isSaving ? t("saving") : t("continueToDetails")}
           </button>
-        </form>
+        </div>
       )}
 
       {step === "copy" && (
