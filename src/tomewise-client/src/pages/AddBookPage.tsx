@@ -70,6 +70,21 @@ const AddBookPage = () => {
     }
   };
 
+  const handleIsbnLookupWithIsbn = async (isbnValue: string) => {
+  setIsbnError(null);
+  setIsLooking(true);
+  try {
+    const result = await lookupIsbn(isbnValue.trim());
+    populateFromLookup(result);
+    setStep("book");
+  } catch {
+    setIsbnError("No book found for this ISBN. You can fill in the details manually.");
+    setStep("book");
+  } finally {
+    setIsLooking(false);
+  }
+};
+
   const populateFromLookup = (result: IsbnLookupResult) => {
     setTitle(result.title ?? "");
     setAuthors(result.authors.join(", "));
@@ -193,48 +208,48 @@ const AddBookPage = () => {
       </div>
 
       {step === "isbn" && (
-  <div className="add-book-card">
-    <h3>{t("scanOrEnterIsbn")}</h3>
-    <p className="hint">{t("isbnHint")}</p>
-    <div className="isbn-input-group">
-      <input
-        type="text"
-        value={isbn}
-        onChange={(e) => setIsbn(e.target.value)}
-        onKeyDown={handleIsbnKeyDown}
-        placeholder="ISBN-10 or ISBN-13"
-        autoFocus
-      />
-      <button
-        className="button-primary"
-        onClick={handleIsbnLookup}
-        disabled={isLooking || !isbn.trim()}
-      >
-        {isLooking ? t("lookingUp") : t("lookUp")}
-      </button>
-    </div>
-    <button
-      className="button-secondary"
-      onClick={() => setShowScanner(true)}
-    >
-      📷 Use camera
-    </button>
-    {showScanner && (
-      <BarcodeScanner
-        onScan={(scannedIsbn) => {
-          setIsbn(scannedIsbn);
-          setShowScanner(false);
-          handleIsbnLookup();
-        }}
-        onClose={() => setShowScanner(false)}
-      />
-    )}
-    {isbnError && <p className="error">{isbnError}</p>}
-    <button className="button-link" onClick={() => setStep("book")}>
-      {t("noIsbn")}
-    </button>
-  </div>
-)}
+        <div className="add-book-card">
+          <h3>{t("scanOrEnterIsbn")}</h3>
+          <p className="hint">{t("isbnHint")}</p>
+          <div className="isbn-input-group">
+            <input
+              type="text"
+              value={isbn}
+              onChange={(e) => setIsbn(e.target.value)}
+              onKeyDown={handleIsbnKeyDown}
+              placeholder="ISBN-10 or ISBN-13"
+              autoFocus
+            />
+            <button
+              className="button-primary"
+              onClick={handleIsbnLookup}
+              disabled={isLooking || !isbn.trim()}
+            >
+              {isLooking ? t("lookingUp") : t("lookUp")}
+            </button>
+          </div>
+          <button
+            className="button-secondary"
+            onClick={() => setShowScanner(true)}
+          >
+            📷 Use camera
+          </button>
+          {showScanner && (
+            <BarcodeScanner
+              onScan={(scannedIsbn) => {
+                setIsbn(scannedIsbn);
+                setShowScanner(false);
+                handleIsbnLookupWithIsbn(scannedIsbn);
+              }}
+              onClose={() => setShowScanner(false)}
+            />
+          )}
+          {isbnError && <p className="error">{isbnError}</p>}
+          <button className="button-link" onClick={() => setStep("book")}>
+            {t("noIsbn")}
+          </button>
+        </div>
+      )}
 
       {step === "book" && (
         <form onSubmit={handleBookSubmit} className="add-book-card">
