@@ -7,6 +7,7 @@ import { getLocations } from "../api/locations";
 import type { IsbnLookupResult } from "../types";
 import { getLanguageName } from "../utils/languageCodes";
 import { useTranslation } from "react-i18next";
+import BarcodeScanner from "../components/BarcodeScanner";
 
 type Step = "isbn" | "book" | "copy";
 
@@ -38,6 +39,7 @@ const AddBookPage = () => {
   const [tags, setTags] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [isSaving, setIsSaving] = useState(false);
+  const [showScanner, setShowScanner] = useState(false);
 
   const { data: locations = [] } = useQuery({
     queryKey: ["locations"],
@@ -191,32 +193,48 @@ const AddBookPage = () => {
       </div>
 
       {step === "isbn" && (
-        <div className="add-book-card">
-          <h3>{t("scanOrEnterIsbn")}</h3>
-          <p className="hint">{t("isbnHint")}</p>
-          <div className="isbn-input-group">
-            <input
-              type="text"
-              value={isbn}
-              onChange={(e) => setIsbn(e.target.value)}
-              onKeyDown={handleIsbnKeyDown}
-              placeholder="ISBN-10 or ISBN-13"
-              autoFocus
-            />
-            <button
-              className="button-primary"
-              onClick={handleIsbnLookup}
-              disabled={isLooking || !isbn.trim()}
-            >
-              {isLooking ? t("lookingUp") : t("lookUp")}
-            </button>
-          </div>
-          {isbnError && <p className="error">{isbnError}</p>}
-          <button className="button-link" onClick={() => setStep("book")}>
-            {t("noIsbn")}
-          </button>
-        </div>
-      )}
+  <div className="add-book-card">
+    <h3>{t("scanOrEnterIsbn")}</h3>
+    <p className="hint">{t("isbnHint")}</p>
+    <div className="isbn-input-group">
+      <input
+        type="text"
+        value={isbn}
+        onChange={(e) => setIsbn(e.target.value)}
+        onKeyDown={handleIsbnKeyDown}
+        placeholder="ISBN-10 or ISBN-13"
+        autoFocus
+      />
+      <button
+        className="button-primary"
+        onClick={handleIsbnLookup}
+        disabled={isLooking || !isbn.trim()}
+      >
+        {isLooking ? t("lookingUp") : t("lookUp")}
+      </button>
+    </div>
+    <button
+      className="button-secondary"
+      onClick={() => setShowScanner(true)}
+    >
+      📷 Use camera
+    </button>
+    {showScanner && (
+      <BarcodeScanner
+        onScan={(scannedIsbn) => {
+          setIsbn(scannedIsbn);
+          setShowScanner(false);
+          handleIsbnLookup();
+        }}
+        onClose={() => setShowScanner(false)}
+      />
+    )}
+    {isbnError && <p className="error">{isbnError}</p>}
+    <button className="button-link" onClick={() => setStep("book")}>
+      {t("noIsbn")}
+    </button>
+  </div>
+)}
 
       {step === "book" && (
         <form onSubmit={handleBookSubmit} className="add-book-card">

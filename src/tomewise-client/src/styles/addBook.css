@@ -127,3 +127,49 @@
     flex-direction: column;
   }
 }
+
+.barcode-scanner {
+  margin-top: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.scanner-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 1rem;
+  background: #f5f5f5;
+  font-size: 0.85rem;
+  color: #666;
+}
+
+.scanner-viewport {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4/3;
+  background: #000;
+}
+
+.scanner-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.scanner-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.scanner-frame {
+  width: 60%;
+  aspect-ratio: 3/1;
+  border: 2px solid #4a3abd;
+  border-radius: 4px;
+  box-shadow: 0 0 0 9999px rgba(0,0,0,0.4);
+}
