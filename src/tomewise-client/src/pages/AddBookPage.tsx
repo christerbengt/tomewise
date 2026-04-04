@@ -71,19 +71,21 @@ const AddBookPage = () => {
   };
 
   const handleIsbnLookupWithIsbn = async (isbnValue: string) => {
-  setIsbnError(null);
-  setIsLooking(true);
-  try {
-    const result = await lookupIsbn(isbnValue.trim());
-    populateFromLookup(result);
-    setStep("book");
-  } catch {
-    setIsbnError("No book found for this ISBN. You can fill in the details manually.");
-    setStep("book");
-  } finally {
-    setIsLooking(false);
-  }
-};
+    setIsbnError(null);
+    setIsLooking(true);
+    try {
+      const result = await lookupIsbn(isbnValue.trim());
+      populateFromLookup(result);
+      setStep("book");
+    } catch {
+      setIsbnError(
+        "No book found for this ISBN. You can fill in the details manually.",
+      );
+      setStep("book");
+    } finally {
+      setIsLooking(false);
+    }
+  };
 
   const populateFromLookup = (result: IsbnLookupResult) => {
     setTitle(result.title ?? "");
@@ -121,7 +123,8 @@ const AddBookPage = () => {
       });
       setSavedBookId(book.id);
       setStep("copy");
-    } catch {
+    } catch (err) {
+      console.error("Book submit error:", err);
       setError("Failed to save book. Please try again.");
     } finally {
       setIsSaving(false);
