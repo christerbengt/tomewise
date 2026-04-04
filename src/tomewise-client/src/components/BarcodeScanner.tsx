@@ -1,5 +1,5 @@
-import { useEffect, useRef, useState } from 'react';
-import { BrowserMultiFormatReader } from '@zxing/browser';
+import { useEffect, useRef, useState } from "react";
+import { BrowserMultiFormatReader } from "@zxing/browser";
 
 interface BarcodeScannerProps {
   onScan: (isbn: string) => void;
@@ -10,6 +10,7 @@ const BarcodeScanner = ({ onScan, onClose }: BarcodeScannerProps) => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [error, setError] = useState<string | null>(null);
   const readerRef = useRef<BrowserMultiFormatReader | null>(null);
+  const hasScanned = useRef(false);
 
   useEffect(() => {
     const reader = new BrowserMultiFormatReader();
@@ -19,7 +20,7 @@ const BarcodeScanner = ({ onScan, onClose }: BarcodeScannerProps) => {
       try {
         const devices = await BrowserMultiFormatReader.listVideoInputDevices();
         if (devices.length === 0) {
-          setError('No camera found.');
+          setError("No camera found.");
           return;
         }
 
@@ -29,17 +30,18 @@ const BarcodeScanner = ({ onScan, onClose }: BarcodeScannerProps) => {
           deviceId,
           videoRef.current!,
           (result, err) => {
-            if (result) {
+            if (result && !hasScanned.current) {
+              hasScanned.current = true;
               BrowserMultiFormatReader.releaseAllStreams();
               onScan(result.getText());
             }
-            if (err && err.name !== 'NotFoundException') {
+            if (err && err.name !== "NotFoundException") {
               console.error(err);
             }
-          }
+          },
         );
       } catch {
-        setError('Could not access camera. Please check permissions.');
+        setError("Could not access camera. Please check permissions.");
       }
     };
 
@@ -48,14 +50,16 @@ const BarcodeScanner = ({ onScan, onClose }: BarcodeScannerProps) => {
     return () => {
       BrowserMultiFormatReader.releaseAllStreams();
     };
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
     <div className="barcode-scanner">
       <div className="scanner-header">
         <span>Point camera at barcode</span>
-        <button className="button-secondary" onClick={onClose}>Cancel</button>
+        <button className="button-secondary" onClick={onClose}>
+          Cancel
+        </button>
       </div>
       {error ? (
         <p className="error">{error}</p>
