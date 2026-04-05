@@ -5,3 +5,4 @@ export * from './LendingRecord';
 export * from './Listing';
 export * from './IsbnLookupResult';
 export * from './AuthResponse';
+export * from './UserResponseDto';

@@ -11,10 +11,20 @@ import Layout from "./components/Layout";
 import AddBookPage from "./pages/AddBookPage";
 import BookDetailPage from "./pages/BookDetailPage";
 import LandingPage from "./pages/LandingPage";
+import AdminUsersPage from "./pages/AdminUsersPage";
+import AdminInvitesPage from "./pages/AdminInvitesPage";
+import ProfilePage from "./pages/ProfilePage";
 
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   const { isAuthenticated } = useAuth();
   return isAuthenticated ? <>{children}</> : <Navigate to="/login" />;
+};
+
+const AdminRoute = ({ children }: { children: React.ReactNode }) => {
+  const { isAuthenticated, isAdmin } = useAuth();
+  if (!isAuthenticated) return <Navigate to="/login" />;
+  if (!isAdmin) return <Navigate to="/dashboard" />;
+  return <>{children}</>;
 };
 
 const App = () => {
@@ -29,6 +39,36 @@ const App = () => {
           <ProtectedRoute>
             <Layout>
               <DashboardPage />
+            </Layout>
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/admin/users"
+        element={
+          <AdminRoute>
+            <Layout>
+              <AdminUsersPage />
+            </Layout>
+          </AdminRoute>
+        }
+      />
+      <Route
+        path="/admin/invites"
+        element={
+          <AdminRoute>
+            <Layout>
+              <AdminInvitesPage />
+            </Layout>
+          </AdminRoute>
+        }
+      />
+      <Route
+        path="/profile"
+        element={
+          <ProtectedRoute>
+            <Layout>
+              <ProfilePage />
             </Layout>
           </ProtectedRoute>
         }

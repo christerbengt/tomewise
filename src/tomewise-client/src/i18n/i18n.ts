@@ -185,6 +185,24 @@ i18n.use(initReactI18next).init({
         loading: "Loading...",
         notFound: "Not found.",
         error: "Something went wrong. Please try again.",
+
+        // Profile
+        profile: "Profile",
+        personalInfo: "Personal information",
+        accountInfo: "Account information",
+        changePassword: "Change password",
+        currentPassword: "Current password",
+        newPassword: "New password",
+        subscriptionStatus: "Subscription status",
+        betaUser: "Beta user",
+        betaMessage:
+          "You are using Tomewise for free during our beta period. We will notify you before any charges apply.",
+        deleteAccount: "Delete account",
+        deleteAccountMessage:
+          "To delete your account, please contact us at support@tomewise.se. We will process your request within 48 hours.",
+        profileUpdated: "Profile updated successfully",
+        passwordChanged: "Password changed successfully",
+        currentPasswordIncorrect: "Current password is incorrect",
       },
     },
     sv: {
@@ -367,6 +385,24 @@ i18n.use(initReactI18next).init({
         loading: "Laddar...",
         notFound: "Hittades inte.",
         error: "Något gick fel. Försök igen.",
+
+        // Profile
+        profile: "Profil",
+        personalInfo: "Personuppgifter",
+        accountInfo: "Kontoinformation",
+        changePassword: "Byt lösenord",
+        currentPassword: "Nuvarande lösenord",
+        newPassword: "Nytt lösenord",
+        subscriptionStatus: "Prenumerationsstatus",
+        betaUser: "Betaanvändare",
+        betaMessage:
+          "Du använder Tomewise gratis under vår betaperiod. Vi meddelar dig innan några avgifter tillkommer.",
+        deleteAccount: "Radera konto",
+        deleteAccountMessage:
+          "För att radera ditt konto, kontakta oss på support@tomewise.se. Vi behandlar din begäran inom 48 timmar.",
+        profileUpdated: "Profilen uppdaterades",
+        passwordChanged: "Lösenordet ändrades",
+        currentPasswordIncorrect: "Nuvarande lösenord är felaktigt",
       },
     },
   },

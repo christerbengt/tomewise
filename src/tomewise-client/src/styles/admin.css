@@ -1,0 +1,144 @@
+.admin-page {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.admin-table {
+  background: var(--card-bg);
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border);
+}
+
+.admin-table-header {
+  display: grid;
+  grid-template-columns: 2fr 1.5fr 1fr 0.5fr 0.75fr 1.5fr;
+  padding: 0.75rem 1rem;
+  background: var(--cream-dark);
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--text-light);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-bottom: 1px solid var(--border);
+}
+
+.admin-table-row {
+  display: grid;
+  grid-template-columns: 2fr 1.5fr 1fr 0.5fr 0.75fr 1.5fr;
+  padding: 0.75rem 1rem;
+  font-size: 0.85rem;
+  border-bottom: 1px solid var(--cream-dark);
+  align-items: center;
+}
+
+.admin-table-row:last-child {
+  border-bottom: none;
+}
+
+.admin-table-row--disabled {
+  opacity: 0.6;
+  background: var(--cream-dark);
+}
+
+.admin-cell-email {
+  font-weight: 500;
+  color: var(--text-dark);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.admin-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.status-badge {
+  font-size: 0.72rem;
+  padding: 2px 8px;
+  border-radius: 20px;
+  font-weight: 500;
+}
+
+.status-badge--active {
+  background: #edf5f0;
+  color: #1e5c38;
+}
+
+.status-badge--disabled {
+  background: var(--cream-dark);
+  color: var(--text-light);
+}
+
+.invite-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.invite-card {
+  background: var(--card-bg);
+  border-radius: 10px;
+  padding: 0.75rem 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border);
+}
+
+.invite-card--inactive {
+  opacity: 0.6;
+}
+
+.invite-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.invite-code {
+  font-family: 'SF Mono', 'Fira Code', monospace;
+  font-size: 0.85rem;
+  color: var(--green-mid);
+  font-weight: 500;
+}
+
+.invite-expiry {
+  font-size: 0.78rem;
+  color: var(--text-light);
+}
+
+.invite-status {
+  font-size: 0.78rem;
+  color: var(--text-light);
+  font-style: italic;
+}
+
+.invite-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+@media (max-width: 768px) {
+  .admin-table-header {
+    display: none;
+  }
+
+  .admin-table-row {
+    grid-template-columns: 1fr;
+    gap: 0.3rem;
+  }
+
+  .invite-card {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+
+  .invite-actions {
+    width: 100%;
+  }
+}
