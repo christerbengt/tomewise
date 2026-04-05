@@ -5,6 +5,20 @@ i18n.use(initReactI18next).init({
   resources: {
     en: {
       translation: {
+        // Empty states
+        emptyBooksTitle: "Your collection awaits",
+        emptyBooksHint:
+          "Start by adding your first book — scan the barcode or enter the ISBN manually.",
+        emptyLocationsTitle: "No locations yet",
+        emptyLocationsHint:
+          "Locations help you track where each book lives. Add a bookcase to get started.",
+        emptyLendingTitle: "Nothing lent out",
+        emptyLendingHint:
+          "When you lend a book to someone, it will appear here.",
+        emptyListingsTitle: "No listings yet",
+        emptyListingsHint:
+          "When you list a book for sale, it will appear here.",
+
         // Password requirements
         passwordRequirements:
           "Password must be at least 8 characters and contain an uppercase letter and a number",
@@ -163,6 +177,20 @@ i18n.use(initReactI18next).init({
     },
     sv: {
       translation: {
+        // Empty states
+        emptyBooksTitle: "Din samling väntar",
+        emptyBooksHint:
+          "Börja med att lägga till din första bok — skanna streckkoden eller ange ISBN manuellt.",
+        emptyLocationsTitle: "Inga platser ännu",
+        emptyLocationsHint:
+          "Platser hjälper dig hålla koll på var varje bok finns. Lägg till en bokhylla för att komma igång.",
+        emptyLendingTitle: "Inget utlånat",
+        emptyLendingHint:
+          "När du lånar ut en bok till någon kommer den att visas här.",
+        emptyListingsTitle: "Inga annonser ännu",
+        emptyListingsHint:
+          "När du lägger ut en bok till salu kommer den att visas här.",
+          
         // Password requirements
         passwordRequirements:
           "Lösenordet måste vara minst 8 tecken långt och innehålla en versal och en siffra",

@@ -108,7 +108,18 @@ const MyBooksPage = () => {
 
       <BookFilters filters={filters} onChange={setFilters} />
 
-      {filtered.length === 0 ? (
+      {filtered.length === 0 && bookItems.length === 0 ? (
+        <div className="empty-state">
+          <p className="empty-state-title">{t("emptyBooksTitle")}</p>
+          <p className="empty-state-hint">{t("emptyBooksHint")}</p>
+          <button
+            className="button-primary"
+            onClick={() => navigate("/add-book")}
+          >
+            {t("addBook")}
+          </button>
+        </div>
+      ) : filtered.length === 0 ? (
         <div className="empty-state">
           <p>{t("noBooksFound")}</p>
         </div>
