@@ -5,18 +5,19 @@
 }
 
 .lending-record {
-  background: white;
+  background: var(--card-bg);
   border-radius: 10px;
   padding: 0.75rem 1rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border);
 }
 
 .lending-record--overdue {
-  border-left: 3px solid #f5c842;
-  background: #fff8e6;
+  border-left: 3px solid var(--gold);
+  background: #fdf8ee;
 }
 
 .lending-record--returned {
@@ -30,28 +31,30 @@
 }
 
 .lending-record-title {
+  font-family: 'Playfair Display', Georgia, serif;
   font-weight: 500;
   font-size: 0.95rem;
+  color: var(--text-dark);
 }
 
 .lending-record-borrower {
   font-size: 0.85rem;
-  color: #555;
+  color: var(--text-mid);
 }
 
 .lending-record-dates {
   font-size: 0.78rem;
-  color: #888;
+  color: var(--text-light);
 }
 
 .overdue-badge {
   display: inline-block;
   font-size: 0.7rem;
-  font-weight: 700;
+  font-weight: 600;
   padding: 2px 8px;
   border-radius: 20px;
-  background: #f5c842;
-  color: #7a4f00;
+  background: var(--gold);
+  color: #3a2a08;
   text-transform: uppercase;
   letter-spacing: 0.04em;
 }

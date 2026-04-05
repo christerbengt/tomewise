@@ -5,14 +5,20 @@
 }
 
 .listing-card {
-  background: white;
+  background: var(--card-bg);
   border-radius: 10px;
   padding: 0.75rem 1rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border);
+  transition: border-color 0.15s;
+}
+
+.listing-card:hover {
+  border-color: var(--gold);
 }
 
 .listing-card--closed {
@@ -28,18 +34,20 @@
 }
 
 .listing-title {
+  font-family: 'Playfair Display', Georgia, serif;
   font-weight: 500;
   font-size: 0.95rem;
+  color: var(--text-dark);
 }
 
 .listing-meta {
   font-size: 0.82rem;
-  color: #666;
+  color: var(--text-mid);
 }
 
 .listing-description {
   font-size: 0.8rem;
-  color: #888;
+  color: var(--text-light);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -61,14 +69,17 @@
 .sold-input-group input {
   width: 110px;
   padding: 0.4rem 0.6rem;
-  border: 1px solid #ddd;
+  border: 1px solid var(--parchment);
   border-radius: 6px;
   font-size: 0.85rem;
   outline: none;
+  background: var(--card-bg);
+  color: var(--text-dark);
+  font-family: 'Source Sans 3', sans-serif;
 }
 
 .sold-input-group input:focus {
-  border-color: #4a3abd;
+  border-color: var(--gold);
 }
 
 @media (max-width: 768px) {

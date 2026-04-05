@@ -8,14 +8,17 @@
 .filter-search {
   width: 100%;
   padding: 0.6rem 0.8rem;
-  border: 1px solid #ddd;
+  border: 1px solid var(--parchment);
   border-radius: 6px;
   font-size: 0.95rem;
   outline: none;
+  background: var(--card-bg);
+  color: var(--text-dark);
+  font-family: 'Source Sans 3', sans-serif;
 }
 
 .filter-search:focus {
-  border-color: #4a3abd;
+  border-color: var(--gold);
 }
 
 .filter-controls {
@@ -26,23 +29,32 @@
 
 .filter-controls select {
   padding: 0.5rem 0.7rem;
-  border: 1px solid #ddd;
+  border: 1px solid var(--parchment);
   border-radius: 6px;
   font-size: 0.85rem;
   outline: none;
-  background: white;
+  background: var(--card-bg);
+  color: var(--text-dark);
   cursor: pointer;
+  font-family: 'Source Sans 3', sans-serif;
 }
 
 .filter-controls select:focus {
-  border-color: #4a3abd;
+  border-color: var(--gold);
 }
 
 .sort-direction {
   padding: 0.5rem 0.8rem;
-  border: 1px solid #ddd;
+  border: 1px solid var(--parchment);
   border-radius: 6px;
-  background: white;
+  background: var(--card-bg);
+  color: var(--text-mid);
   cursor: pointer;
   font-size: 0.9rem;
+  transition: all 0.15s;
+}
+
+.sort-direction:hover {
+  border-color: var(--gold);
+  color: var(--green-mid);
 }

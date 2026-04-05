@@ -1,9 +1,18 @@
 .location-form {
-  background: white;
+  background: var(--card-bg);
   border-radius: 10px;
   padding: 1.25rem;
   margin-bottom: 1.5rem;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border);
+}
+
+.location-form h3 {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--green-dark);
+  margin-bottom: 1rem;
 }
 
 .form-row {
@@ -22,13 +31,19 @@
 }
 
 .location-card {
-  background: white;
+  background: var(--card-bg);
   border-radius: 10px;
   padding: 0.75rem 1rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border);
+  transition: border-color 0.15s;
+}
+
+.location-card:hover {
+  border-color: var(--gold);
 }
 
 .location-info {
@@ -38,14 +53,15 @@
 }
 
 .location-code {
-  font-size: 1.1rem;
-  font-weight: 600;
-  color: #4a3abd;
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: var(--green-dark);
 }
 
 .location-description {
   font-size: 0.8rem;
-  color: #888;
+  color: var(--text-light);
 }
 
 .location-actions {
@@ -56,44 +72,46 @@
 
 .book-count {
   font-size: 0.85rem;
-  color: #666;
+  color: var(--text-light);
+}
+
+.button-secondary {
+  background: none;
+  border: 1px solid var(--parchment);
+  border-radius: 6px;
+  padding: 0.4rem 0.8rem;
+  font-size: 0.85rem;
+  color: var(--text-mid);
+  cursor: pointer;
+  transition: all 0.15s;
+  font-family: 'Source Sans 3', sans-serif;
+}
+
+.button-secondary:hover {
+  border-color: var(--green-mid);
+  color: var(--green-mid);
 }
 
 .button-danger {
   background: none;
-  border: 1px solid #e5e5e5;
+  border: 1px solid var(--parchment);
   border-radius: 6px;
   padding: 0.4rem 0.8rem;
   font-size: 0.85rem;
-  color: #888;
+  color: var(--text-light);
   cursor: pointer;
   transition: all 0.15s;
+  font-family: 'Source Sans 3', sans-serif;
 }
 
 .button-danger:hover:not(:disabled) {
-  border-color: #c0392b;
-  color: #c0392b;
+  border-color: #8b2020;
+  color: #8b2020;
 }
 
 .button-danger:disabled {
   opacity: 0.4;
   cursor: not-allowed;
-}
-
-.button-secondary {
-  background: none;
-  border: 1px solid #ddd;
-  border-radius: 6px;
-  padding: 0.4rem 0.8rem;
-  font-size: 0.85rem;
-  color: #444;
-  cursor: pointer;
-  transition: all 0.15s;
-}
-
-.button-secondary:hover {
-  border-color: #4a3abd;
-  color: #4a3abd;
 }
 
 @media (max-width: 768px) {

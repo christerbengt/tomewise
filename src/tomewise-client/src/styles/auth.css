@@ -1,23 +1,29 @@
 .auth-container {
   max-width: 400px;
   margin: 80px auto;
-  background: white;
-  padding: 2rem;
-  border-radius: 10px;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+  background: var(--card-bg);
+  padding: 2.5rem;
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border);
 }
 
 .auth-container h1 {
-  font-size: 1.5rem;
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 2rem;
+  color: var(--green-dark);
   margin-bottom: 0.25rem;
-  color: #4a3abd;
+  text-align: center;
+  letter-spacing: 0.02em;
 }
 
 .auth-container h2 {
-  font-size: 1.1rem;
+  font-family: 'Source Sans 3', sans-serif;
+  font-size: 1rem;
   font-weight: 400;
-  color: #666;
-  margin-bottom: 1.5rem;
+  color: var(--text-light);
+  margin-bottom: 2rem;
+  text-align: center;
 }
 
 .form-group {
@@ -30,18 +36,22 @@
 .form-group label {
   font-size: 0.85rem;
   font-weight: 500;
-  color: #444;
+  color: var(--text-mid);
 }
 
 .form-group input {
   padding: 0.6rem 0.8rem;
-  border: 1px solid #ddd;
+  border: 1px solid var(--parchment);
   border-radius: 6px;
   font-size: 1rem;
   outline: none;
+  background: var(--cream);
+  color: var(--text-dark);
   transition: border-color 0.15s;
+  font-family: 'Source Sans 3', sans-serif;
 }
 
 .form-group input:focus {
-  border-color: #4a3abd;
+  border-color: var(--gold);
+  background: var(--card-bg);
 }

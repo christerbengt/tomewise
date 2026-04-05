@@ -11,7 +11,12 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
   };
 
   const navLinks = [
-    { path: "/dashboard", label: t("dashboard"), mobileOnly: true },
+    {
+      path: "/dashboard",
+      label: t("dashboard"),
+      mobileOnly: true,
+      isHome: true,
+    },
     { path: "/my-books", label: t("myBooks"), mobileOnly: true },
     { path: "/locations", label: t("locations"), mobileOnly: true },
     { path: "/lending", label: t("lending"), mobileOnly: true },
@@ -23,27 +28,42 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
       <nav className="sidebar">
         <div className="sidebar-header">
           <h1>Tomewise</h1>
+          <span className="sidebar-tagline">{t("Books in Order")}</span>
         </div>
         <ul className="nav-links">
-          {navLinks.map((link) => (
-            <li
-              key={link.path}
-              className={!link.mobileOnly ? "desktop-only" : ""}
-            >
-              <Link
-                to={link.path}
-                className={location.pathname === link.path ? "active" : ""}
+          {navLinks.map((link, index) => (
+            <>
+              {(index === 2 || index === 3) && (
+                <li
+                  key={`divider-${index}`}
+                  className="nav-divider"
+                  aria-hidden="true"
+                />
+              )}
+              <li
+                key={link.path}
+                className={!link.mobileOnly ? "desktop-only" : ""}
               >
-                {link.label}
-              </Link>
-            </li>
+                <Link
+                  to={link.path}
+                  className={location.pathname === link.path ? "active" : ""}
+                >
+                  {link.isHome ? (
+                    <span className="nav-icon">⌂</span>
+                  ) : (
+                    link.label
+                  )}
+                </Link>
+              </li>
+            </>
           ))}
         </ul>
         <button className="language-button" onClick={toggleLanguage}>
           {i18n.language === "en" ? "Svenska" : "English"}
         </button>
         <button className="logout-button" onClick={logout}>
-          {t("signOut")}
+          <span className="nav-icon">⏻</span>
+          <span className="nav-label">{t("signOut")}</span>
         </button>
       </nav>
       <main className="main-content">{children}</main>
