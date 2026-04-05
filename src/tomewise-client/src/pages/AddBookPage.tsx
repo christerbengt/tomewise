@@ -12,6 +12,7 @@ import BarcodeScanner from "../components/BarcodeScanner";
 type Step = "isbn" | "book" | "copy";
 
 const AddBookPage = () => {
+  const [showIsbnHint, setShowIsbnHint] = useState(false);
   const { t } = useTranslation();
   const navigate = useNavigate();
   const [step, setStep] = useState<Step>("isbn");
@@ -246,6 +247,14 @@ const AddBookPage = () => {
               onClose={() => setShowScanner(false)}
             />
           )}
+          <button
+            className="button-link"
+            onClick={() => setShowIsbnHint(!showIsbnHint)}
+          >
+            {showIsbnHint ? "▲ " : "▼ "}
+            {t("isbnWhatsThisLabel")}
+          </button>
+          {showIsbnHint && <p className="isbn-hint">{t("isbnWhatsThis")}</p>}
           {isbnError && <p className="error">{isbnError}</p>}
           <button className="button-link" onClick={() => setStep("book")}>
             {t("noIsbn")}

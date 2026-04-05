@@ -110,6 +110,11 @@ i18n.use(initReactI18next).init({
         save: "Save",
         saveAndAddAnother: "Save and add another",
         saving: "Saving...",
+        isbnWhatsThis:
+          "The ISBN is the 10 or 13-digit number found on the back of the book, usually below the barcode.",
+        cameraNotSupported:
+          "Camera scanning is not supported in this browser. Please use a barcode scanner or enter the ISBN manually.",
+        isbnWhatsThisLabel: "What's an ISBN?",
 
         // Book detail
         edit: "Edit",
@@ -190,7 +195,7 @@ i18n.use(initReactI18next).init({
           "Ditt bibliotek börjar här. Börja med att lägga till din första bok — skanna streckkoden på baksidan, eller ange ISBN manuellt. Böcker utan ISBN kan också läggas till manuellt.",
         onboardingAction: "Lägg till din första bok",
         onboardingDismiss: "Förstått",
-        
+
         // Empty states
         emptyBooksTitle: "Din samling väntar",
         emptyBooksHint:
@@ -287,6 +292,11 @@ i18n.use(initReactI18next).init({
         save: "Spara",
         saveAndAddAnother: "Spara och lägg till en till",
         saving: "Sparar...",
+        isbnWhatsThis:
+          "ISBN är det 10- eller 13-siffriga numret som finns på baksidan av boken, vanligtvis under streckkoden.",
+        cameraNotSupported:
+          "Kameraavläsning stöds inte i den här webbläsaren. Använd en streckkodsläsare eller ange ISBN manuellt.",
+        isbnWhatsThisLabel: "Vad är ISBN?",
 
         // Book detail
         edit: "Redigera",
