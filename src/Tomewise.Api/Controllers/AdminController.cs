@@ -83,7 +83,8 @@ public class AdminController(
     [HttpGet("invites")]
     public async Task<ActionResult<IEnumerable<InviteResponseDto>>> GetInvites()
     {
-        var baseUrl = $"{Request.Scheme}://{Request.Host}";
+        var scheme = Request.Headers["X-Forwarded-Proto"].FirstOrDefault() ?? Request.Scheme;
+        var baseUrl = $"{scheme}://{Request.Host}";
 
         var invites = await context.Invites
             .Include(i => i.UsedBy)
@@ -97,7 +98,8 @@ public class AdminController(
     public async Task<ActionResult<InviteResponseDto>> CreateInvite()
     {
         var userId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value!;
-        var baseUrl = $"{Request.Scheme}://{Request.Host}";
+        var scheme = Request.Headers["X-Forwarded-Proto"].FirstOrDefault() ?? Request.Scheme;
+        var baseUrl = $"{scheme}://{Request.Host}";
 
         var invite = new Invite
         {
