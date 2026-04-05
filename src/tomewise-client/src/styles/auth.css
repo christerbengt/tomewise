@@ -55,3 +55,33 @@
   border-color: var(--gold);
   background: var(--card-bg);
 }
+
+.password-requirements {
+  list-style: none;
+  margin-top: 0.4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.requirement-error {
+  font-size: 0.8rem;
+  color: #8b2020;
+  padding-left: 0.5rem;
+  border-left: 2px solid #8b2020;
+}
+
+.password-hint {
+  font-size: 0.78rem;
+  color: var(--text-light);
+  margin-top: 0.4rem;
+  font-style: italic;
+  text-align: left;
+}
+
+.password-valid {
+  font-size: 0.85rem;
+  color: var(--green-mid);
+  margin-top: 0.4rem;
+  text-align: left;
+}

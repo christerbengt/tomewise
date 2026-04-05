@@ -4,6 +4,14 @@ import { useAuth } from "../context/AuthContext";
 import { register } from "../api/auth";
 import { useTranslation } from "react-i18next";
 
+const validatePassword = (password: string) => {
+  const errors = [];
+  if (password.length < 8) errors.push('passwordTooShort');
+  if (!/[A-Z]/.test(password)) errors.push('passwordNeedsUppercase');
+  if (!/[0-9]/.test(password)) errors.push('passwordNeedsNumber');
+  return errors;
+};
+
 const RegisterPage = () => {
   const { t } = useTranslation();
   const { login: authLogin } = useAuth();
@@ -14,9 +22,14 @@ const RegisterPage = () => {
   const [lastName, setLastName] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const [passwordTouched, setPasswordTouched] = useState(false);
+
+  const passwordErrors = validatePassword(password);
+  const passwordValid = passwordErrors.length === 0;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!passwordValid) return;
     setError(null);
     setLoading(true);
     try {
@@ -70,11 +83,27 @@ const RegisterPage = () => {
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            onBlur={() => setPasswordTouched(true)}
             required
           />
+          {passwordTouched && passwordErrors.length > 0 && (
+            <ul className="password-requirements">
+              {passwordErrors.map((err) => (
+                <li key={err} className="requirement-error">
+                  {t(err)}
+                </li>
+              ))}
+            </ul>
+          )}
+          {!passwordTouched && (
+            <p className="password-hint">{t("passwordRequirements")}</p>
+          )}
+          {passwordTouched && passwordValid && (
+            <p className="password-valid">✓</p>
+          )}
         </div>
         {error && <p className="error">{error}</p>}
-        <button type="submit" disabled={loading}>
+        <button type="submit" disabled={loading || !passwordValid}>
           {loading ? t("registering") : t("register")}
         </button>
       </form>
