@@ -28,7 +28,7 @@ public class AuthController(
         if (!result.Succeeded)
             return BadRequest(result.Errors);
 
-        var token = tokenService.GenerateToken(user);
+        var token = await tokenService.GenerateToken(user);
         return Ok(new { token });
     }
 
@@ -40,7 +40,7 @@ public class AuthController(
         if (user == null || !await userManager.CheckPasswordAsync(user, request.Password))
             return Unauthorized("Invalid email or password");
 
-        var token = tokenService.GenerateToken(user);
+        var token = await tokenService.GenerateToken(user);
         return Ok(new { token });
     }
 }

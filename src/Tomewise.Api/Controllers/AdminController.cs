@@ -16,17 +16,6 @@ public class AdminController(
     UserManager<ApplicationUser> userManager) : ControllerBase
 {
 
-    // Temp
-    [AllowAnonymous]
-    [HttpGet("debug/roles/{email}")]
-    public async Task<IActionResult> GetUserRoles(string email)
-    {
-        var user = await userManager.FindByEmailAsync(email);
-        if (user == null) return NotFound("User not found");
-
-        var roles = await userManager.GetRolesAsync(user);
-        return Ok(new { email, roles, isDisabled = user.IsDisabled });
-    }
     // ── Users ──────────────────────────────────────────────
 
     [HttpGet("users")]
