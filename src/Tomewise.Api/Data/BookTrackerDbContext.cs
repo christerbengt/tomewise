@@ -15,6 +15,7 @@ public class BookTrackerDbContext(DbContextOptions<BookTrackerDbContext> options
     public DbSet<Tag> Tags => Set<Tag>();
     public DbSet<LendingRecord> LendingRecords => Set<LendingRecord>();
     public DbSet<Listing> Listings => Set<Listing>();
+    public DbSet<Invite> Invites => Set<Invite>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -196,6 +197,27 @@ public class BookTrackerDbContext(DbContextOptions<BookTrackerDbContext> options
                 .OnDelete(DeleteBehavior.Cascade);
 
             e.HasIndex(l => l.Status);
+        });
+
+        // Invite
+        modelBuilder.Entity<Invite>(e =>
+        {
+            e.HasKey(i => i.Id);
+            e.Property(i => i.Id).HasDefaultValueSql("gen_random_uuid()");
+            e.Property(i => i.Code).IsRequired().HasMaxLength(32);
+            e.HasIndex(i => i.Code).IsUnique();
+
+            e.HasOne(i => i.CreatedBy)
+                .WithMany(u => u.CreatedInvites)
+                .HasForeignKey(i => i.CreatedByUserId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            e.HasOne(i => i.UsedBy)
+                .WithMany(u => u.UsedInvites)
+                .HasForeignKey(i => i.UsedByUserId)
+                .OnDelete(DeleteBehavior.SetNull);
+
+            e.Ignore(i => i.IsValid);
         });
 
 
