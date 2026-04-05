@@ -5,6 +5,13 @@ i18n.use(initReactI18next).init({
   resources: {
     en: {
       translation: {
+        // Onboarding
+        onboardingTitle: "Welcome to Tomewise",
+        onboardingMessage:
+          "Your library begins here. Start by adding your first book — scan the barcode on the back cover, or enter the ISBN manually. Books without an ISBN can be added manually too.",
+        onboardingAction: "Add your first book",
+        onboardingDismiss: "Got it",
+
         // Empty states
         emptyBooksTitle: "Your collection awaits",
         emptyBooksHint:
@@ -177,6 +184,13 @@ i18n.use(initReactI18next).init({
     },
     sv: {
       translation: {
+        // Onboarding
+        onboardingTitle: "Välkommen till Tomewise",
+        onboardingMessage:
+          "Ditt bibliotek börjar här. Börja med att lägga till din första bok — skanna streckkoden på baksidan, eller ange ISBN manuellt. Böcker utan ISBN kan också läggas till manuellt.",
+        onboardingAction: "Lägg till din första bok",
+        onboardingDismiss: "Förstått",
+        
         // Empty states
         emptyBooksTitle: "Din samling väntar",
         emptyBooksHint:
@@ -190,7 +204,7 @@ i18n.use(initReactI18next).init({
         emptyListingsTitle: "Inga annonser ännu",
         emptyListingsHint:
           "När du lägger ut en bok till salu kommer den att visas här.",
-          
+
         // Password requirements
         passwordRequirements:
           "Lösenordet måste vara minst 8 tecken långt och innehålla en versal och en siffra",

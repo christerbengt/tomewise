@@ -117,3 +117,35 @@
     grid-template-columns: repeat(2, 1fr);
   }
 }
+
+.onboarding-banner {
+  background: var(--card-bg);
+  border: 1px solid var(--gold);
+  border-radius: 10px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  box-shadow: var(--shadow);
+}
+
+.onboarding-content h3 {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: var(--green-dark);
+  margin-bottom: 0.75rem;
+}
+
+.onboarding-content p {
+  font-size: 0.9rem;
+  color: var(--text-mid);
+  margin-bottom: 1.25rem;
+  text-align: left;
+  margin-top: 0;
+  line-height: 1.7;
+}
+
+.onboarding-actions {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
