@@ -100,16 +100,31 @@ using (var scope = app.Services.CreateScope())
 {
     var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
     var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+    var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
 
     if (!await roleManager.RoleExistsAsync("Admin"))
+    {
         await roleManager.CreateAsync(new IdentityRole("Admin"));
+        logger.LogInformation("Admin role created");
+    }
 
     var adminEmail = app.Configuration["AdminEmail"];
+    logger.LogInformation("AdminEmail configured as: {Email}", adminEmail);
+
     if (!string.IsNullOrEmpty(adminEmail))
     {
         var adminUser = await userManager.FindByEmailAsync(adminEmail);
+        logger.LogInformation("Admin user found: {Found}", adminUser != null);
+
         if (adminUser != null && !await userManager.IsInRoleAsync(adminUser, "Admin"))
-            await userManager.AddToRoleAsync(adminUser, "Admin");
+        {
+            var result = await userManager.AddToRoleAsync(adminUser, "Admin");
+            logger.LogInformation("Admin role assigned: {Success}", result.Succeeded);
+        }
+        else if (adminUser != null)
+        {
+            logger.LogInformation("User already has Admin role");
+        }
     }
 }
 
