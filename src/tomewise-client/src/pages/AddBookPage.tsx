@@ -100,6 +100,10 @@ const AddBookPage = () => {
   };
 
   const handleBookSubmit = async () => {
+    if (!title.trim()) {
+      setError(t("titleRequired"));
+      return;
+    }
     setError(null);
     setIsSaving(true);
     try {
