@@ -115,6 +115,7 @@ i18n.use(initReactI18next).init({
         cameraNotSupported:
           "Camera scanning is not supported in this browser. Please use a barcode scanner or enter the ISBN manually.",
         isbnWhatsThisLabel: "What's an ISBN?",
+        titleRequired: 'Please enter a title before continuing.',
 
         // Book detail
         edit: "Edit",
@@ -315,6 +316,7 @@ i18n.use(initReactI18next).init({
         cameraNotSupported:
           "Kameraavläsning stöds inte i den här webbläsaren. Använd en streckkodsläsare eller ange ISBN manuellt.",
         isbnWhatsThisLabel: "Vad är ISBN?",
+        titleRequired: 'Ange en titel innan du fortsätter.',
 
         // Book detail
         edit: "Redigera",
