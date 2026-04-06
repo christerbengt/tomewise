@@ -100,9 +100,6 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
                   {link.isHome ? (
                     <span className="nav-icon">⌂</span>
                   ) : (
-                    link.label
-                  )}
-                  {!link.isHome && (
                     <span className="nav-label">{link.label}</span>
                   )}
                 </Link>
