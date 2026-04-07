@@ -220,3 +220,42 @@
   text-align: left;
   margin-top: 0;
 }
+
+.location-select-row {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.location-select-row select {
+  flex: 1;
+}
+
+.inline-location-form {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.inline-location-form input {
+  padding: 0.5rem 0.7rem;
+  border: 1px solid var(--parchment);
+  border-radius: 6px;
+  font-size: 0.9rem;
+  outline: none;
+  background: var(--cream);
+  color: var(--text-dark);
+  font-family: 'Source Sans 3', sans-serif;
+}
+
+.inline-location-form input:first-child {
+  width: 90px;
+}
+
+.inline-location-form input:nth-child(2) {
+  width: 70px;
+}
+
+.inline-location-form input:focus {
+  border-color: var(--gold);
+}
