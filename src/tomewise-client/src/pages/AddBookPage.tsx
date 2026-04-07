@@ -8,6 +8,8 @@ import type { IsbnLookupResult } from "../types";
 import { getLanguageName } from "../utils/languageCodes";
 import { useTranslation } from "react-i18next";
 import BarcodeScanner from "../components/BarcodeScanner";
+import { createLocation } from "../api/locations";
+import { useQueryClient } from "@tanstack/react-query";
 
 type Step = "isbn" | "book" | "copy";
 
@@ -41,6 +43,12 @@ const AddBookPage = () => {
   const [error, setError] = useState<string | null>(null);
   const [isSaving, setIsSaving] = useState(false);
   const [showScanner, setShowScanner] = useState(false);
+
+  const [showNewLocation, setShowNewLocation] = useState(false);
+  const [newBookCase, setNewBookCase] = useState("");
+  const [newShelfNumber, setNewShelfNumber] = useState("");
+  const [isCreatingLocation, setIsCreatingLocation] = useState(false);
+  const queryClient = useQueryClient();
 
   const { data: locations = [] } = useQuery({
     queryKey: ["locations"],
@@ -185,6 +193,37 @@ const AddBookPage = () => {
       setError("Failed to save copy. Please try again.");
     } finally {
       setIsSaving(false);
+    }
+  };
+
+  const handleCreateLocation = async () => {
+    if (!newBookCase || !newShelfNumber) return;
+    setIsCreatingLocation(true);
+    try {
+      const created = await createLocation({
+        bookCase: newBookCase,
+        shelfNumber: Number(newShelfNumber),
+        customCode: null,
+        description: null,
+      });
+      await queryClient.invalidateQueries({ queryKey: ["locations"] });
+      setLocationId(created.id);
+      setShowNewLocation(false);
+      setNewBookCase("");
+      setNewShelfNumber("");
+    } catch {
+      // If it already exists, find it and select it
+      const existing = locations.find(
+        (l) =>
+          l.bookCase === newBookCase &&
+          l.shelfNumber === Number(newShelfNumber),
+      );
+      if (existing) {
+        setLocationId(existing.id);
+        setShowNewLocation(false);
+        setNewBookCase("");
+        setNewShelfNumber("");
+      }
     }
   };
 
@@ -405,19 +444,56 @@ const AddBookPage = () => {
           </div>
           <div className="form-group">
             <label htmlFor="location">{t("location")}</label>
-            <select
-              id="location"
-              value={locationId}
-              onChange={(e) => setLocationId(e.target.value)}
-            >
-              <option value="">{t("unshelved")}</option>
-              {locations.map((loc) => (
-                <option key={loc.id} value={loc.id}>
-                  {loc.customCode ?? `${loc.bookCase}${loc.shelfNumber}`}
-                  {loc.description ? ` — ${loc.description}` : ""}
-                </option>
-              ))}
-            </select>
+            <div className="location-select-row">
+              <select
+                id="location"
+                value={locationId}
+                onChange={(e) => setLocationId(e.target.value)}
+              >
+                <option value="">{t("unshelved")}</option>
+                {locations.map((loc) => (
+                  <option key={loc.id} value={loc.id}>
+                    {loc.customCode ?? `${loc.bookCase}${loc.shelfNumber}`}
+                    {loc.description ? ` — ${loc.description}` : ""}
+                  </option>
+                ))}
+              </select>
+              <button
+                type="button"
+                className="button-secondary"
+                onClick={() => setShowNewLocation(!showNewLocation)}
+              >
+                {showNewLocation ? "×" : "+"}
+              </button>
+            </div>
+            {showNewLocation && (
+              <div className="inline-location-form">
+                <input
+                  type="text"
+                  value={newBookCase}
+                  onChange={(e) => setNewBookCase(e.target.value.toUpperCase())}
+                  placeholder="Bookcase (e.g. A)"
+                  maxLength={3}
+                />
+                <input
+                  type="number"
+                  value={newShelfNumber}
+                  onChange={(e) => setNewShelfNumber(e.target.value)}
+                  placeholder="Shelf"
+                  min="1"
+                />
+                <button
+                  type="button"
+                  className="button-primary"
+                  onClick={handleCreateLocation}
+                  disabled={
+                    isCreatingLocation || !newBookCase || !newShelfNumber
+                  }
+                >
+                  {isCreatingLocation ? "..." : "Create"}
+                </button>
+              </div>
+            )}
           </div>
           <div className="form-row">
             <div className="form-group">
