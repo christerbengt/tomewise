@@ -150,6 +150,7 @@ i18n.use(initReactI18next).init({
         saveLocation: "Save location",
         books: "books",
         noLocations: "No locations yet. Add your first bookcase!",
+        bulkCreateHint: 'Bookcases are labeled A–Z, then AA–ZZ, then AAA–ZZZ. Shelves are numbered from 1. Example: bookcases A to C with 5 shelves creates A1–A5, B1–B5, C1–C5.',
 
         // Lending
         currentlyLentOutCount: "Currently lent out ({{count}})",
@@ -351,6 +352,7 @@ i18n.use(initReactI18next).init({
         saveLocation: "Spara plats",
         books: "böcker",
         noLocations: "Inga platser ännu. Lägg till din första bokhylla!",
+        bulkCreateHint: 'Bokhyllor märks A–Z, sedan AA–ZZ, sedan AAA–ZZZ. Hyllor numreras från 1. Exempel: bokhyllor A till C med 5 hyllplan skapar A1–A5, B1–B5, C1–C5.',
 
         // Lending
         currentlyLentOutCount: "Utlånade just nu ({{count}})",
