@@ -1,7 +1,17 @@
+/* ── Base layout ──────────────────────────────────────── */
+
 .layout {
   display: flex;
   min-height: 100vh;
 }
+
+.main-content {
+  margin-left: 220px;
+  flex: 1;
+  padding: 2rem;
+}
+
+/* ── Desktop sidebar ──────────────────────────────────── */
 
 .sidebar {
   width: 220px;
@@ -34,6 +44,8 @@
   display: block;
 }
 
+/* ── Navigation links ─────────────────────────────────── */
+
 .nav-links {
   list-style: none;
   flex: 1;
@@ -64,108 +76,14 @@
   font-weight: 500;
 }
 
-.logout-button {
-  width: 100%;
-  padding: 0.6rem;
-  background: none;
-  border: 1px solid rgba(184, 169, 138, 0.3);
-  border-radius: 6px;
-  color: var(--gold-light);
-  cursor: pointer;
-  font-size: 0.85rem;
-  transition: all 0.15s;
-  font-family: 'Source Sans 3', sans-serif;
-}
-
-.logout-button:hover {
-  border-color: var(--gold-light);
-  color: var(--cream);
-}
-
-.language-button {
-  width: 100%;
-  padding: 0.6rem;
-  background: none;
-  border: 1px solid rgba(184, 169, 138, 0.3);
-  border-radius: 6px;
-  color: var(--gold-light);
-  cursor: pointer;
-  font-size: 0.85rem;
-  transition: all 0.15s;
-  margin-bottom: 0.5rem;
-  font-family: 'Source Sans 3', sans-serif;
-}
-
-.language-button:hover {
-  border-color: var(--gold-light);
-  color: var(--cream);
-}
-
-.main-content {
-  margin-left: 220px;
-  flex: 1;
-  padding: 2rem;
-}
-
-@media (max-width: 768px) {
-  .sidebar {
-    width: 100%;
-    min-height: auto;
-    height: 60px;
-    top: auto;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    flex-direction: row;
-    align-items: center;
-    padding: 0;
-    border-right: none;
-    border-top: 1px solid var(--green-light);
-    z-index: 100;
-  }
-
-  .sidebar-header {
-    display: none;
-  }
-
-  .nav-links {
-    flex-direction: row;
-    justify-content: space-around;
-    flex: 1;
-    gap: 0;
-  }
-
-  .nav-links a {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 0.4rem 0.5rem;
-    font-size: 0.7rem;
-    border-radius: 4px;
-    color: var(--gold-light);
-  }
-
-  .logout-button {
-    width: auto;
-    border: none;
-    padding: 0.4rem 0.8rem;
-    font-size: 0.7rem;
-    border-radius: 4px;
-  }
-
-  .language-button {
-    display: none;
-  }
-
-  .main-content {
-    margin-left: 0;
-    margin-bottom: 60px;
-    padding: 1rem;
-  }
-}
-
 .nav-divider {
   display: none;
+}
+
+.nav-section-divider {
+  height: 1px;
+  background: rgba(184, 169, 138, 0.2);
+  margin: 0.5rem 0;
 }
 
 .nav-icon {
@@ -176,34 +94,7 @@
   display: inline;
 }
 
-@media (max-width: 768px) {
-  .desktop-only {
-    display: none;
-  }
-
-  .nav-divider {
-    display: block;
-    width: 1px;
-    background: rgba(184, 169, 138, 0.3);
-    margin: 8px 0;
-    align-self: stretch;
-  }
-
-  .nav-icon {
-    display: block;
-    font-size: 1.2rem;
-  }
-
-  .nav-label {
-    display: none;
-  }
-}
-
-.nav-section-divider {
-  height: 1px;
-  background: rgba(184, 169, 138, 0.2);
-  margin: 0.5rem 0;
-}
+/* ── Profile and admin links (desktop sidebar) ────────── */
 
 .profile-link {
   display: block;
@@ -228,32 +119,49 @@
   font-weight: 500;
 }
 
-.mobile-header {
-  display: none;
+/* ── Sidebar buttons ──────────────────────────────────── */
+
+.language-button {
+  width: 100%;
+  padding: 0.6rem;
+  background: none;
+  border: 1px solid rgba(184, 169, 138, 0.3);
+  border-radius: 6px;
+  color: var(--gold-light);
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: all 0.15s;
+  margin-bottom: 0.5rem;
+  font-family: 'Source Sans 3', sans-serif;
 }
 
-@media (max-width: 768px) {
-  .mobile-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 1rem;
-    height: 50px;
-    background: var(--green-dark);
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 100;
-    border-bottom: 1px solid var(--green-light);
-  }
+.language-button:hover {
+  border-color: var(--gold-light);
+  color: var(--cream);
+}
 
-  .main-content {
-    margin-top: 50px;
-    margin-bottom: 60px;
-    margin-left: 0;
-    padding: 1rem;
-  }
+.logout-button {
+  width: 100%;
+  padding: 0.6rem;
+  background: none;
+  border: 1px solid rgba(184, 169, 138, 0.3);
+  border-radius: 6px;
+  color: var(--gold-light);
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: all 0.15s;
+  font-family: 'Source Sans 3', sans-serif;
+}
+
+.logout-button:hover {
+  border-color: var(--gold-light);
+  color: var(--cream);
+}
+
+/* ── Mobile header ────────────────────────────────────── */
+
+.mobile-header {
+  display: none;
 }
 
 .mobile-header-title {
@@ -284,6 +192,8 @@
 .mobile-icon-button:hover {
   color: var(--cream);
 }
+
+/* ── Admin dropdown ───────────────────────────────────── */
 
 .admin-menu {
   position: relative;
@@ -319,7 +229,102 @@
   background: var(--cream-dark);
 }
 
+/* ── Mobile overrides ─────────────────────────────────── */
+
 @media (max-width: 768px) {
+  .main-content {
+    margin-left: 0;
+    margin-top: 50px;
+    margin-bottom: 60px;
+    padding: 1rem;
+  }
+
+  .mobile-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 1rem;
+    height: 50px;
+    background: var(--green-dark);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    border-bottom: 1px solid var(--green-light);
+  }
+
+  .sidebar {
+    width: 100%;
+    min-height: auto;
+    height: 60px;
+    top: auto;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    flex-direction: row;
+    align-items: center;
+    padding: 0;
+    border-right: none;
+    border-top: 1px solid var(--green-light);
+    z-index: 100;
+  }
+
+  .sidebar-header {
+    display: none;
+  }
+
+  .nav-links {
+    flex-direction: row;
+    justify-content: space-around;
+    flex: 1;
+    gap: 0;
+  }
+
+  .nav-links a {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0.4rem 0.5rem;
+    font-size: 0.65rem;
+    border-radius: 4px;
+    color: var(--gold-light);
+  }
+
+  .nav-divider {
+    display: block;
+    width: 1px;
+    background: rgba(184, 169, 138, 0.3);
+    margin: 8px 0;
+    align-self: stretch;
+  }
+
+  .nav-icon {
+    display: block;
+    font-size: 1.2rem;
+  }
+
+  .nav-label {
+    display: block;
+    font-size: 0.65rem;
+  }
+
+  .logout-button {
+    width: auto;
+    border: none;
+    padding: 0.4rem 0.8rem;
+    font-size: 0.65rem;
+    border-radius: 4px;
+  }
+
+  .language-button {
+    display: none;
+  }
+
+  .desktop-only {
+    display: none !important;
+  }
+
   .profile-link {
     display: none;
   }
