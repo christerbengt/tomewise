@@ -28,3 +28,17 @@ export const lookupIsbn = async (isbn: string): Promise<IsbnLookupResult> => {
   const { data } = await apiClient.get<IsbnLookupResult>(`/isbn/${isbn}`);
   return data;
 };
+
+export const exportGoodreads = async (): Promise<void> => {
+  const response = await apiClient.get('/export/goodreads', {
+    responseType: 'blob'
+  });
+  const url = window.URL.createObjectURL(new Blob([response.data]));
+  const link = document.createElement('a');
+  link.href = url;
+  link.setAttribute('download', 'tomewise-export-goodreads.csv');
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+  window.URL.revokeObjectURL(url);
+};

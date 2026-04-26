@@ -98,7 +98,10 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
                   className={location.pathname === link.path ? "active" : ""}
                 >
                   {link.isHome ? (
-                    <span className="nav-icon">⌂</span>
+                    <>
+                      <span className="nav-icon">⌂</span>
+                      <span className="nav-label">{link.label}</span>
+                    </>
                   ) : (
                     <span className="nav-label">{link.label}</span>
                   )}
