@@ -5,6 +5,7 @@ import BookFilters from "../components/BookFilters";
 import type { FilterState } from "../components/BookFilters";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { exportGoodreads } from "../api/books";
 
 const MyBooksPage = () => {
   const { t } = useTranslation();
@@ -98,12 +99,17 @@ const MyBooksPage = () => {
     <div className="my-books">
       <div className="page-header">
         <h2>{t("myBooks")}</h2>
-        <button
-          className="button-primary"
-          onClick={() => navigate("/add-book")}
-        >
-          {t("addBook")}
-        </button>
+        <div className="header-actions">
+          <button className="button-secondary" onClick={exportGoodreads}>
+            {t("exportGoodreads")}
+          </button>
+          <button
+            className="button-primary"
+            onClick={() => navigate("/add-book")}
+          >
+            {t("addBook")}
+          </button>
+        </div>
       </div>
 
       <BookFilters filters={filters} onChange={setFilters} />

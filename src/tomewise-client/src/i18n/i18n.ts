@@ -51,6 +51,7 @@ i18n.use(initReactI18next).init({
 
         // My Books
         addBook: "+ Add book",
+        exportGoodreads: "Export to Goodreads",
         searchPlaceholder: "Search by title, author...",
         allStatuses: "All statuses",
         inCollection: "In collection",
@@ -253,6 +254,7 @@ i18n.use(initReactI18next).init({
 
         // My Books
         addBook: "+ Lägg till bok",
+        exportGoodreads: "Exportera till Goodreads",
         searchPlaceholder: "Sök på titel, författare...",
         allStatuses: "Alla statusar",
         inCollection: "I samlingen",
