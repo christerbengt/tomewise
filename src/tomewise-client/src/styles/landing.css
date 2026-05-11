@@ -84,3 +84,19 @@
   margin: 0 auto 1.5rem;
   display: block;
 }
+
+.landing-support {
+  margin-top: 2rem;
+  font-size: 0.8rem;
+  color: var(--text-light);
+  text-align: center;
+  font-style: italic;
+}
+
+.landing-support a {
+  color: var(--gold);
+}
+
+.landing-support a:hover {
+  color: var(--gold-light);
+}

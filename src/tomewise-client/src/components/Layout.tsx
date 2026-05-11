@@ -136,10 +136,19 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
           </>
         )}
 
+        <a
+          href="https://ko-fi.com/christerbengt"
+          target="_blank"
+          rel="noreferrer"
+          className="kofi-link"
+        >
+          ☕ Donate
+        </a>
+
         <button className="language-button" onClick={toggleLanguage}>
           {i18n.language === "en" ? "Svenska" : "English"}
         </button>
-
+        
         <button className="logout-button" onClick={logout}>
           <span className="nav-icon">⏻</span>
           <span className="nav-label">{t("signOut")}</span>
