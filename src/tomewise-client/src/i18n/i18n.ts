@@ -41,6 +41,7 @@ i18n.use(initReactI18next).init({
         lending: "Lending",
         listings: "Listings",
         signOut: "Sign out",
+        donate: "Donate",
 
         // Dashboard
         booksInCollection: "Books in collection",
@@ -244,6 +245,7 @@ i18n.use(initReactI18next).init({
         lending: "Utlåning",
         listings: "Försäljning",
         signOut: "Logga ut",
+        donate: "Bidra",
 
         // Dashboard
         booksInCollection: "Böcker i samlingen",

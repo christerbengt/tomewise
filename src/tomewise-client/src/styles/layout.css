@@ -332,4 +332,23 @@
   .nav-section-divider {
     display: none;
   }
+
+  .kofi-link {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.75rem;
+  color: var(--gold-light) !important;
+  text-decoration: none;
+  padding: 0.4rem 0.8rem;
+  margin-bottom: 0.5rem;
+  transition: color 0.15s;
+  opacity: 0.7;
+}
+
+.kofi-link:hover {
+  color: var(--cream) !important;
+  opacity: 1;
+  text-decoration: none;
+}
 }

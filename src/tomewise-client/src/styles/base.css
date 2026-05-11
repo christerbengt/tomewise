@@ -67,6 +67,14 @@ a {
   text-decoration: none;
 }
 
+.sidebar a {
+  color: var(--gold-light);
+}
+
+.sidebar a:hover {
+  color: var(--cream);
+}
+
 a:hover {
   color: var(--green-dark);
   text-decoration: underline;
